@@ -1,0 +1,32 @@
+{
+  "name": "grokpair",
+  "version": "2.3.1",
+  "description": "Delegate bounded work to a detached Grok Build collaborator (research, review, an implementation in its own worktree, documents or media), keep working, then read what Grok said and made.",
+  "author": {
+    "name": "Tiziano AI",
+    "url": "https://github.com/Tiziano-AI"
+  },
+  "homepage": "https://github.com/Tiziano-AI/grokpair",
+  "repository": "https://github.com/Tiziano-AI/grokpair",
+  "license": "MIT",
+  "keywords": [
+    "grok",
+    "xai",
+    "grok-build",
+    "acp",
+    "mcp",
+    "codex-plugin",
+    "claude-code-plugin",
+    "delegation",
+    "subagent"
+  ],
+  "mcpServers": {
+    "grokpair": {
+      "command": "${CLAUDE_PLUGIN_ROOT}/bin/grokpair",
+      "args": [
+        "mcp"
+      ],
+      "timeout": 660000
+    }
+  }
+}

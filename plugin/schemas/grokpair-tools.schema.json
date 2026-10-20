@@ -1,0 +1,947 @@
+{
+  "product": "grokpair",
+  "version": "2.3.1",
+  "schema_version": "3",
+  "tools": [
+    {
+      "name": "grok_spawn",
+      "description": "Delegate a self-contained task in cwd to a detached Grok Build collaborator and return at once; keep working while it runs. Grok does not see your conversation: include result, context, sources and file/effect limits. Non-Git directories are normal. Optional worktree:true asks Grok for an isolated tree including native-supported uncommitted context; you inspect and integrate. Optional sandbox requests an exact native profile; omission leaves native defaults in control, with no implicit readonly profile. A brief/worktree is not a security sandbox. Attachments pass exact paths with kind reference or image. A key reuses its holder only for the identical complete original request, normalizing omitted worktree=false and attachments=[]; changed input conflicts, unverifiable input retains the key, and neither launches. Use grok_send to change work. New admissions return agent_id/operation_id; existing returns agent_id/summary, not the answer: wait, inspect actual artifacts and follow up before close. Startup/provisioning diagnostics and returned directories remain readable; never replay uncertain creation or select a looser profile automatically. worker_unavailable with admission none means this server cannot start a worker: follow its action, usually a new session.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "task": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "\\S",
+            "description": "Self-contained brief: purpose, relevant facts and sources, the result you need, and any limits on files or effects. Grok does not see your conversation. A leading /name may invoke a native command, skill or workflow; use one only when its effects are authorized."
+          },
+          "cwd": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "^\\/[^\\0]*$",
+            "description": "Existing absolute physical directory, with symlinks already resolved, in which to do the work; Git is unnecessary unless worktree is requested. The filesystem root, exact account home and protected agent state are refused."
+          },
+          "worktree": {
+            "default": false,
+            "description": "Create a native Grok worktree and work in its corresponding subdirectory. Native copy rules include uncommitted work; nothing is applied back automatically. Omitted or false works in cwd. This is file placement, not a sandbox selection.",
+            "type": "boolean"
+          },
+          "sandbox": {
+            "description": "Exact native sandbox profile name to request. Omitted passes no --sandbox flag: Grok resolves its configuration and requirements, which may permit unrestricted execution. Independent of worktree. A requested name is not proof of applied confinement.",
+            "type": "string",
+            "minLength": 1,
+            "pattern": "\\S"
+          },
+          "attachments": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "path": {
+                  "type": "string",
+                  "minLength": 1,
+                  "pattern": "^\\/[^\\0]*$",
+                  "description": "Absolute local path. Runtime admission separately checks canonical filesystem identity, allowed boundaries and file type."
+                },
+                "kind": {
+                  "type": "string",
+                  "enum": [
+                    "reference",
+                    "image"
+                  ]
+                }
+              },
+              "required": [
+                "path",
+                "kind"
+              ],
+              "additionalProperties": false
+            },
+            "description": "Explicit local inputs with required kind: reference supplies a native resource reference; image supplies image content. No path-only or inferred-kind input. A prose path is not an attachment; admission does not prove consumption."
+          },
+          "search": {
+            "type": "object",
+            "properties": {
+              "webSearch": {
+                "anyOf": [
+                  {
+                    "type": "object",
+                    "properties": {
+                      "allowedDomains": {
+                        "anyOf": [
+                          {
+                            "maxItems": 5,
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      },
+                      "excludedDomains": {
+                        "anyOf": [
+                          {
+                            "maxItems": 5,
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      }
+                    },
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "xSearch": {
+                "anyOf": [
+                  {
+                    "type": "object",
+                    "properties": {
+                      "dateBound": {
+                        "anyOf": [
+                          {
+                            "type": "object",
+                            "properties": {
+                              "fromDate": {
+                                "anyOf": [
+                                  {
+                                    "type": "string",
+                                    "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+                                  },
+                                  {
+                                    "type": "null"
+                                  }
+                                ]
+                              },
+                              "toDate": {
+                                "anyOf": [
+                                  {
+                                    "type": "string",
+                                    "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+                                  },
+                                  {
+                                    "type": "null"
+                                  }
+                                ]
+                              }
+                            },
+                            "additionalProperties": false
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      }
+                    },
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            },
+            "additionalProperties": false,
+            "description": "Exact native per-turn search overrides, not a network firewall or a requirement to search. Omitted engines and semantically empty objects preserve native settings; null on webSearch or xSearch clears that engine's override. Nested null fields mean absence, not clearing an engine. X dates are inclusive fromDate and exclusive toDate at 00:00 UTC, scoped to native keyword/semantic search."
+          },
+          "model": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "\\S",
+            "description": "Explicit native session model selection, including during active work; omitted preserves the native choice."
+          },
+          "effort": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "\\S",
+            "description": "Explicit native session effort selection, including during active work; omitted preserves the native choice."
+          },
+          "key": {
+            "description": "Idempotency key unique to the piece of work. An open holder is returned only for the identical complete original spawn request (worktree omitted=false, attachments omitted=[]; other native omissions stay distinct). Changed input conflicts; unverifiable original input retains the key and admits nothing. Recover a lost response with grok_list by this key or the identical keyed call, never a new key. Use grok_send to change the work.",
+            "type": "string",
+            "minLength": 1,
+            "pattern": "\\S"
+          }
+        },
+        "required": [
+          "task",
+          "cwd"
+        ],
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "additionalProperties": false,
+        "examples": [
+          {
+            "task": "Create comparison.docx from the research in this directory, inspect its rendering, and return the document and findings. Leave source files unchanged; do not contact anyone or publish.",
+            "cwd": "/workspace/research-notes"
+          }
+        ]
+      }
+    },
+    {
+      "name": "grok_send",
+      "description": "Act on an existing collaborator. action defaults to follow_up; each action accepts only its own fields:\n- follow_up (task, attachments?, search?, resume?): Queue new work in the same conversation. It asks for no cancellation, though Grok's follow-up setting may deliver it at once while a turn waits. resume:true reconnects a disconnected collaborator to carry this new work; it never replays earlier input.\n- steer (task, attachments?): Redirect current work without cancelling it: text and images are inserted at Grok's next safe point, or become a priority turn if none comes. Attachments must be images.\n- send_now (task, attachments?, search?): Submit priority work; Grok may cancel an ordinary running turn for it (an active Goal is steered instead).\n- side_question (task): Ask beside running work without adding a turn; the answer arrives as this operation's side answer.\n- edit (task, prompt_id): Replace the text of the queued prompt prompt_id (see the queue record); image inputs are kept, prompts with file references are refused.\n- configure (model and/or effort): Change the session model and/or effort, even during work; the operation records which setting applied.\nReturns the admitted operation_id; read its effect and the resulting turns with grok_wait.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "agent_id": {
+            "type": "string",
+            "pattern": "^agent_[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+          },
+          "task": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "\\S",
+            "description": "Self-contained brief: purpose, relevant facts and sources, the result you need, and any limits on files or effects. Grok does not see your conversation. A leading /name may invoke a native command, skill or workflow; use one only when its effects are authorized."
+          },
+          "action": {
+            "default": "follow_up",
+            "type": "string",
+            "enum": [
+              "follow_up",
+              "steer",
+              "send_now",
+              "side_question",
+              "edit",
+              "configure"
+            ]
+          },
+          "attachments": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "path": {
+                  "type": "string",
+                  "minLength": 1,
+                  "pattern": "^\\/[^\\0]*$",
+                  "description": "Absolute local path. Runtime admission separately checks canonical filesystem identity, allowed boundaries and file type."
+                },
+                "kind": {
+                  "type": "string",
+                  "enum": [
+                    "reference",
+                    "image"
+                  ]
+                }
+              },
+              "required": [
+                "path",
+                "kind"
+              ],
+              "additionalProperties": false
+            },
+            "description": "Explicit local inputs with required kind: reference supplies a native resource reference; image supplies image content. No path-only or inferred-kind input. A prose path is not an attachment; admission does not prove consumption."
+          },
+          "search": {
+            "type": "object",
+            "properties": {
+              "webSearch": {
+                "anyOf": [
+                  {
+                    "type": "object",
+                    "properties": {
+                      "allowedDomains": {
+                        "anyOf": [
+                          {
+                            "maxItems": 5,
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      },
+                      "excludedDomains": {
+                        "anyOf": [
+                          {
+                            "maxItems": 5,
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      }
+                    },
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "xSearch": {
+                "anyOf": [
+                  {
+                    "type": "object",
+                    "properties": {
+                      "dateBound": {
+                        "anyOf": [
+                          {
+                            "type": "object",
+                            "properties": {
+                              "fromDate": {
+                                "anyOf": [
+                                  {
+                                    "type": "string",
+                                    "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+                                  },
+                                  {
+                                    "type": "null"
+                                  }
+                                ]
+                              },
+                              "toDate": {
+                                "anyOf": [
+                                  {
+                                    "type": "string",
+                                    "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+                                  },
+                                  {
+                                    "type": "null"
+                                  }
+                                ]
+                              }
+                            },
+                            "additionalProperties": false
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      }
+                    },
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            },
+            "additionalProperties": false,
+            "description": "Exact native per-turn search overrides, not a network firewall or a requirement to search. Omitted engines and semantically empty objects preserve native settings; null on webSearch or xSearch clears that engine's override. Nested null fields mean absence, not clearing an engine. X dates are inclusive fromDate and exclusive toDate at 00:00 UTC, scoped to native keyword/semantic search."
+          },
+          "model": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "\\S",
+            "description": "Explicit native session model selection, including during active work; omitted preserves the native choice."
+          },
+          "effort": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "\\S",
+            "description": "Explicit native session effort selection, including during active work; omitted preserves the native choice."
+          },
+          "prompt_id": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Exact native prompt identifier returned by this collaborator; pass it unchanged, without trimming."
+          },
+          "resume": {
+            "description": "follow_up only: true reconnects a disconnected collaborator for this new work; earlier input is never replayed. worker_unavailable with admission none means this server cannot start a worker; follow its action.",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "agent_id"
+        ],
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "additionalProperties": false,
+        "examples": [
+          {
+            "agent_id": "agent_12345678-1234-4123-8123-123456789abc",
+            "action": "follow_up",
+            "task": "Compare the new document with your earlier conclusion.",
+            "attachments": [
+              {
+                "path": "/workspace/research-notes/update.pdf",
+                "kind": "reference"
+              }
+            ]
+          },
+          {
+            "agent_id": "agent_12345678-1234-4123-8123-123456789abc",
+            "action": "steer",
+            "task": "Prioritize the operational risks in the current analysis."
+          },
+          {
+            "agent_id": "agent_12345678-1234-4123-8123-123456789abc",
+            "action": "send_now",
+            "task": "Analyze this additional diagram now.",
+            "attachments": [
+              {
+                "path": "/workspace/research-notes/diagram.png",
+                "kind": "image"
+              }
+            ]
+          },
+          {
+            "agent_id": "agent_12345678-1234-4123-8123-123456789abc",
+            "action": "side_question",
+            "task": "Which assumption is most important to your current conclusion?"
+          },
+          {
+            "agent_id": "agent_12345678-1234-4123-8123-123456789abc",
+            "action": "edit",
+            "prompt_id": "native-prompt-queued",
+            "task": "Compare the same queued inputs, focusing on the deployment decision."
+          },
+          {
+            "agent_id": "agent_12345678-1234-4123-8123-123456789abc",
+            "action": "configure",
+            "effort": "<exact native effort ID>"
+          }
+        ]
+      }
+    },
+    {
+      "name": "grok_wait",
+      "description": "Wait for collaborators. settled (default) returns once a target stops working, needs attention or becomes unavailable with something new; change returns on any meaningful update. Timeout stops nothing. agents contains only pages delivered within the complete JSON max_chars budget, including the triggering target. Excluded targets keep their entire input cursor; rotate delivered targets behind them. result (default) groups turns/text/text_file, side_answers, attention, files, issues, failed/not-sent/unknown operations, native queue-removal outcomes and background tasks; records keeps the full typed stream. Large records use fragments as in grok_read. Drain has_more with read, then retain each delivered cursor. text_file is complete root text only. Idle means queue observed empty; ready means no work running but queue unknown. Neither proves quality, final files or background completion.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "targets": {
+            "minItems": 1,
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "agent_id": {
+                  "type": "string",
+                  "pattern": "^agent_[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+                },
+                "cursor": {
+                  "type": "string",
+                  "minLength": 1,
+                  "pattern": "\\S",
+                  "description": "Opaque cursor returned by grok_read or grok_wait; pass it unchanged."
+                }
+              },
+              "required": [
+                "agent_id"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "until": {
+            "default": "settled",
+            "description": "settled (default): return when a target stops working, needs an answer or becomes unavailable, with something new since its cursor. change: return on any meaningful update.",
+            "type": "string",
+            "enum": [
+              "settled",
+              "change"
+            ]
+          },
+          "timeout_ms": {
+            "default": 120000,
+            "description": "How long to wait. A timeout returns what is available and never stops the work.",
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 600000
+          },
+          "view": {
+            "type": "string",
+            "enum": [
+              "result",
+              "records"
+            ],
+            "description": "result (default): status, each turn's text and outcome, side answers, attention, files, issues, noteworthy operations and background tasks. records: the full typed record stream. A cursor keeps the view it was created with."
+          },
+          "max_chars": {
+            "default": 32000,
+            "description": "Budget for JSON.stringify of the entire aggregate wait result; default 32000. agents contains only delivered pages, including the triggering target; excluded targets keep their complete input cursor. Rotate delivered targets behind excluded ones for caller-side progress. Large records use fragments as in grok_read; no oversized exception. If the host shortens output, retry from previous cursors with a smaller budget.",
+            "type": "integer",
+            "exclusiveMinimum": 0,
+            "maximum": 9007199254740991
+          }
+        },
+        "required": [
+          "targets"
+        ],
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "additionalProperties": false,
+        "examples": [
+          {
+            "targets": [
+              {
+                "agent_id": "agent_12345678-1234-4123-8123-123456789abc"
+              }
+            ],
+            "timeout_ms": 300000
+          }
+        ]
+      }
+    },
+    {
+      "name": "grok_read",
+      "description": "Read retained output passively in result or records view. Omit cursor to start; pass it unchanged to continue while has_more. Its view/prompt_id stay fixed; omit cursor to change them. records adds raw queue, options, capabilities, all operations and resolved attention. max_chars bounds JSON.stringify of the entire public response, not bytes/tokens. Large structured records appear in fragments {record_id,record_type,offset,json,complete}: concatenate exact substrings of one record_id before interpreting or answering. fragment_reset discards an incomplete obsolete version; replay continues without skipping intervening updates. Fragment frames omit the large summary. Too-small budgets return response_budget_too_small without cursor progress. If a host shortens output, retry from the previous cursor with a smaller budget. Reading never starts, resumes, approves or changes work.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "agent_id": {
+            "type": "string",
+            "pattern": "^agent_[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+          },
+          "cursor": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "\\S",
+            "description": "Opaque cursor returned by grok_read or grok_wait; pass it unchanged."
+          },
+          "view": {
+            "type": "string",
+            "enum": [
+              "result",
+              "records"
+            ],
+            "description": "result (default): status, each turn's text and outcome, side answers, attention, files, issues, noteworthy operations and background tasks. records: the full typed record stream. A cursor keeps the view it was created with."
+          },
+          "prompt_id": {
+            "description": "Restrict reading to records of this native prompt; the filter stays in the cursor.",
+            "type": "string",
+            "minLength": 1
+          },
+          "max_chars": {
+            "default": 32000,
+            "description": "Budget for JSON.stringify of the complete public result, including its envelope; default 32000. Large records use explicit page.fragments JSON substrings, never apparent partial native requests. Join one record_id in offset order before interpreting it; fragment_reset discards an obsolete incomplete version. A budget below the compact progress frame returns response_budget_too_small without advancing. Host byte/token limits may still shorten output: retry from the previous cursor with a smaller budget. text_file supplies root text only.",
+            "type": "integer",
+            "exclusiveMinimum": 0,
+            "maximum": 9007199254740991
+          }
+        },
+        "required": [
+          "agent_id"
+        ],
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "additionalProperties": false,
+        "examples": [
+          {
+            "agent_id": "agent_12345678-1234-4123-8123-123456789abc"
+          },
+          {
+            "agent_id": "agent_12345678-1234-4123-8123-123456789abc",
+            "view": "records"
+          }
+        ]
+      }
+    },
+    {
+      "name": "grok_list",
+      "description": "List collaborators newest first: open ones by default, closed ones too with include_closed. key narrows to collaborators spawned with that key. Use it to recover an agent_id, then grok_wait or grok_read for output. While page.has_more, pass page.next_cursor with the same filters.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "include_closed": {
+            "default": false,
+            "description": "Also list closed collaborators, whose output stays readable.",
+            "type": "boolean"
+          },
+          "key": {
+            "description": "Only collaborators spawned with this key.",
+            "type": "string",
+            "minLength": 1,
+            "pattern": "\\S"
+          },
+          "limit": {
+            "default": 20,
+            "type": "integer",
+            "exclusiveMinimum": 0,
+            "maximum": 9007199254740991
+          },
+          "cursor": {
+            "description": "page.next_cursor from the previous grok_list call with the same filters.",
+            "type": "string",
+            "minLength": 1,
+            "pattern": "\\S"
+          }
+        },
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "additionalProperties": false,
+        "examples": [
+          {},
+          {
+            "include_closed": true,
+            "limit": 50
+          }
+        ]
+      }
+    },
+    {
+      "name": "grok_respond",
+      "description": "Answer a pending request from a collaborator in status attention: pass its request_id and the response object for its method, as shown in the attention record. session/request_permission: {outcome: {outcome: \"selected\", optionId}} with an offered optionId, or {outcome: {outcome: \"cancelled\"}}. _x.ai/ask_user_question: {outcome: \"accepted\", answers: {<exact question text>: answer or [answers]}, annotations?}, {outcome: \"chat_about_this\" or \"skip_interview\", partial_answers?} or {outcome: \"cancelled\"}. _x.ai/exit_plan_mode: {outcome: \"approved\" (implement), \"cancelled\" (revise the plan) or \"abandoned\" (leave planning), feedback?}. _x.ai/mcp/elicit: {outcome: accept, decline or cancel, content?}; elicitation/create: {action: accept, decline or cancel, content?}. Decide within the authority you were given and ask your user only for a decision that is theirs. An invalid response leaves the request pending; a submitted answer is not sent again.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "agent_id": {
+            "type": "string",
+            "pattern": "^agent_[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+          },
+          "request_id": {
+            "type": "string",
+            "pattern": "^request_[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+          },
+          "response": {
+            "anyOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "outcome": {
+                    "anyOf": [
+                      {
+                        "type": "object",
+                        "properties": {
+                          "outcome": {
+                            "type": "string",
+                            "const": "selected"
+                          },
+                          "optionId": {
+                            "type": "string",
+                            "minLength": 1
+                          }
+                        },
+                        "required": [
+                          "outcome",
+                          "optionId"
+                        ],
+                        "additionalProperties": {}
+                      },
+                      {
+                        "type": "object",
+                        "properties": {
+                          "outcome": {
+                            "type": "string",
+                            "const": "cancelled"
+                          }
+                        },
+                        "required": [
+                          "outcome"
+                        ],
+                        "additionalProperties": {}
+                      }
+                    ]
+                  }
+                },
+                "required": [
+                  "outcome"
+                ],
+                "additionalProperties": {}
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "outcome": {
+                    "type": "string",
+                    "const": "accepted"
+                  },
+                  "answers": {
+                    "type": "object",
+                    "propertyNames": {
+                      "type": "string"
+                    },
+                    "additionalProperties": {
+                      "anyOf": [
+                        {
+                          "type": "string"
+                        },
+                        {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          }
+                        }
+                      ]
+                    }
+                  },
+                  "annotations": {
+                    "anyOf": [
+                      {
+                        "type": "object",
+                        "propertyNames": {
+                          "type": "string"
+                        },
+                        "additionalProperties": {
+                          "type": "object",
+                          "properties": {
+                            "preview": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            },
+                            "notes": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            }
+                          },
+                          "additionalProperties": {}
+                        }
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  }
+                },
+                "required": [
+                  "outcome",
+                  "answers"
+                ],
+                "additionalProperties": {}
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "outcome": {
+                    "type": "string",
+                    "enum": [
+                      "chat_about_this",
+                      "skip_interview"
+                    ]
+                  },
+                  "partial_answers": {
+                    "type": "object",
+                    "propertyNames": {
+                      "type": "string"
+                    },
+                    "additionalProperties": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "required": [
+                  "outcome"
+                ],
+                "additionalProperties": {}
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "outcome": {
+                    "type": "string",
+                    "enum": [
+                      "approved",
+                      "cancelled",
+                      "abandoned"
+                    ]
+                  },
+                  "feedback": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  }
+                },
+                "required": [
+                  "outcome"
+                ],
+                "additionalProperties": {}
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "outcome": {
+                    "type": "string",
+                    "enum": [
+                      "accept",
+                      "decline",
+                      "cancel"
+                    ]
+                  },
+                  "content": {
+                    "allOf": [
+                      {
+                        "$ref": "#/definitions/__schema0"
+                      }
+                    ]
+                  }
+                },
+                "required": [
+                  "outcome"
+                ],
+                "additionalProperties": {}
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "action": {
+                    "type": "string",
+                    "enum": [
+                      "accept",
+                      "decline",
+                      "cancel"
+                    ]
+                  },
+                  "content": {
+                    "anyOf": [
+                      {
+                        "type": "object",
+                        "propertyNames": {
+                          "type": "string"
+                        },
+                        "additionalProperties": {
+                          "anyOf": [
+                            {
+                              "type": "string"
+                            },
+                            {
+                              "type": "number"
+                            },
+                            {
+                              "type": "boolean"
+                            },
+                            {
+                              "type": "array",
+                              "items": {
+                                "type": "string"
+                              }
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  }
+                },
+                "required": [
+                  "action"
+                ],
+                "additionalProperties": {}
+              }
+            ],
+            "description": "Native response object for the pending request's exact method, preserved without wrapper tags. Permission uses nested outcome; questions/plans and xAI elicitation use outcome; MCP elicitation uses action. The pending native request validates its applicable branch and offered values."
+          }
+        },
+        "required": [
+          "agent_id",
+          "request_id",
+          "response"
+        ],
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "additionalProperties": false,
+        "examples": [
+          {
+            "agent_id": "agent_12345678-1234-4123-8123-123456789abc",
+            "request_id": "request_12345678-1234-4123-8123-123456789abc",
+            "response": {
+              "outcome": {
+                "outcome": "selected",
+                "optionId": "actual_authorized_option"
+              }
+            }
+          }
+        ],
+        "definitions": {
+          "__schema0": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "number"
+              },
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "$ref": "#/definitions/__schema0"
+                }
+              },
+              {
+                "type": "object",
+                "propertyNames": {
+                  "type": "string"
+                },
+                "additionalProperties": {
+                  "$ref": "#/definitions/__schema0"
+                }
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "grok_interrupt",
+      "description": "Stop a collaborator's current turn, like Ctrl-C; queued prompts stay queued. With prompt_id, instead remove that exact queued prompt if Grok allows it. Read the later native operation/queue outcome: removal can mean combination or steering, not cancellation of a turn or its pending attention. Admission alone proves neither removal nor cancellation.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "agent_id": {
+            "type": "string",
+            "pattern": "^agent_[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+          },
+          "prompt_id": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Exact native prompt identifier returned by this collaborator; pass it unchanged, without trimming."
+          }
+        },
+        "required": [
+          "agent_id"
+        ],
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "additionalProperties": false,
+        "examples": [
+          {
+            "agent_id": "agent_12345678-1234-4123-8123-123456789abc"
+          },
+          {
+            "agent_id": "agent_12345678-1234-4123-8123-123456789abc",
+            "prompt_id": "native-prompt-queued"
+          }
+        ]
+      }
+    },
+    {
+      "name": "grok_close",
+      "description": "Close a collaborator you no longer need, cancelling any running work; read what you need first. Closing deletes nothing: retained output, the native session and any worktree stay, and no change is applied to your checkout. A spawn key is released on close.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "agent_id": {
+            "type": "string",
+            "pattern": "^agent_[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+          }
+        },
+        "required": [
+          "agent_id"
+        ],
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "additionalProperties": false,
+        "examples": [
+          {
+            "agent_id": "agent_12345678-1234-4123-8123-123456789abc"
+          }
+        ]
+      }
+    }
+  ]
+}

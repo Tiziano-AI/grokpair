@@ -1,0 +1,13 @@
+.DS_Store
+node_modules/
+dist/
+coverage/
+.cache/
+.env
+.env.*
+!.env.example
+*.log
+*.tgz
+.pnpm-store/
+.tmp/
+.cdx-continue/

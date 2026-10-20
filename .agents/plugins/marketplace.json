@@ -1,0 +1,20 @@
+{
+  "name": "grokpair",
+  "interface": {
+    "displayName": "grokpair"
+  },
+  "plugins": [
+    {
+      "name": "grokpair",
+      "source": {
+        "source": "local",
+        "path": "./plugin"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_USE"
+      },
+      "category": "Productivity"
+    }
+  ]
+}
