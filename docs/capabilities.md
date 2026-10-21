@@ -1,11 +1,16 @@
 # Public capabilities
 
-grokpair **2.3.2 (source candidate)** · public schema **3** · runtime-v2 ·
+grokpair **2.3.2** · public schema **3** · runtime-v2 ·
 SQLite format 1 · cursors `gp1.`
 
-The 2.3.2 documentation-and-icon candidate changes no runtime behavior or
-public contract from 2.3.1. It is not yet published or consumer-qualified;
-[RELEASE](../RELEASE.md) records that distinction.
+Version 2.3.2 refines documentation, caller guidance and plugin presentation
+without changing runtime behavior or public contracts from 2.3.1.
+[RELEASE](../RELEASE.md) separates source qualification from installed and
+useful fresh-caller acceptance; those installed observations are specific
+to 2.3.1. The repository's
+[Git tags](https://github.com/Tiziano-AI/grokpair/tags) identify published
+source; the shared [catalog](https://github.com/Tiziano-AI/plugins) selects
+its offered revision.
 
 This is the public contract: the eight tools, what each accepts and returns,
 how output is read and continued, and the command line that mirrors them. The

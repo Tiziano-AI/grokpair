@@ -195,9 +195,9 @@ plugin installation.
 <summary>Install a release tag instead of the shared catalog</summary>
 
 The product-local `grokpair` marketplace can select an annotated release
-tag. These commands select the published **2.3.1** release, not the local
-2.3.2 candidate. Choose this route or the shared catalog, not both in the
-same host.
+tag. These commands pin **2.3.1**; the repository's
+[Git tags](https://github.com/Tiziano-AI/grokpair/tags) identify published
+releases. Choose this route or the shared catalog, not both in the same host.
 
 ```bash
 # Codex
@@ -250,9 +250,12 @@ it has exited.
 
 ## Read further
 
-Current source candidate: **2.3.2**, a documentation-and-icon refinement with
-no runtime behavior changes. The published and installed release remains
-**2.3.1**; its acceptance does not qualify the new candidate.
+Source version **2.3.2** refines documentation, caller guidance and plugin
+presentation without changing runtime behavior from 2.3.1. The repository's
+[Git tags](https://github.com/Tiziano-AI/grokpair/tags) identify published
+source; the shared [catalog](https://github.com/Tiziano-AI/plugins) selects
+its offered revision. Installed and useful fresh-caller acceptance is
+recorded for **2.3.1** and is not inherited by 2.3.2.
 
 Public schema **3**, runtime-v2, SQLite format 1 and `gp1.` cursors are
 unchanged. The store and cursor contracts are separate from the package
