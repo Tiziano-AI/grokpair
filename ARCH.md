@@ -22,7 +22,7 @@ public contract.
 
 | Contract | Current | Owner |
 | --- | --- | --- |
-| Product version | 2.3.2 (source candidate) | `package.json` |
+| Product version | 2.3.2 | `package.json` |
 | Public schema | `"3"` | `PUBLIC_SCHEMA_VERSION` in `src/core.ts` |
 | Runtime contract | 2, directory `runtime-v2` | `RUNTIME_CONTRACT` in `src/agent-store.ts` |
 | SQLite format | 1 | `src/agent-store.ts` |
@@ -33,10 +33,12 @@ These are separate contracts that change independently. A runtime-contract
 change starts a new store directory; there is no migration, compatible reader
 or old-runtime lookup.
 
-Version 2.3.2 is a local documentation-and-icon candidate, not a published or
-installed release. It changes no execution behavior or public contract from
-2.3.1. [RELEASE](RELEASE.md) keeps candidate status separate from the completed
-2.3.1 qualification.
+Version 2.3.2 refines documentation, caller guidance and plugin presentation
+without changing execution behavior or public contracts from 2.3.1. The
+repository's [Git tags](https://github.com/Tiziano-AI/grokpair/tags) identify
+published source; the shared [catalog](https://github.com/Tiziano-AI/plugins)
+selects its offered revision. [RELEASE](RELEASE.md) records source qualification
+and consumer acceptance separately.
 
 Schema 3 changes held-key matching and bounded read/wait delivery. Runtime-v2,
 SQLite format 1 and existing cursors are retained, with no store migration or
