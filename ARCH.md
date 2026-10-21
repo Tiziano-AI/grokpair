@@ -159,6 +159,7 @@ The rest of `plugin/` is hand-authored or built:
 
 | Path | Role |
 | --- | --- |
+| `plugin/README.md` | The short, hand-authored guide shipped with the plugin: purpose, prerequisites and first use, with links to the repository's full setup and policies. |
 | `plugin/bin/grokpair` | The two-line Node launcher every host and the shell run. |
 | `plugin/lib/grokpair.js` | The bundle `pnpm build` makes from `src/`. |
 | `plugin/schemas/grokpair-tools.schema.json` | The generated tool descriptions and input schemas. |
