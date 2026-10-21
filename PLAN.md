@@ -2,20 +2,18 @@
 
 ## Where it stands
 
-The current source is the **2.3.2 release candidate**, with public schema 3,
-runtime-v2, SQLite format 1 and `gp1.` cursors. It retains one execution core
-and the same eight MCP/CLI tools. This candidate refines public documentation,
+The current source is **2.3.2**, with public schema 3, runtime-v2, SQLite
+format 1 and `gp1.` cursors. It retains one execution core
+and the same eight MCP/CLI tools. This version refines public documentation,
 caller guidance, plugin descriptions and listing artwork, without changing
-native execution, dependencies or public contracts. It has not been published,
-installed or accepted as an end-to-end consumer release.
+native execution, dependencies or public contracts.
 
-Version 2.3.1 is public and distributed as **`grokpair@tiziano-ai`** through
-the shared [Tiziano AI marketplace](https://github.com/Tiziano-AI/plugins).
-Its final installed payload and registries matched the tagged source in
-Codex and Claude Code. Fresh app-bundled Codex and Claude Code CLI callers
-completed useful collaboration, a substantive follow-up and explicit closure.
-[RELEASE](RELEASE.md) records those observations and their limits. They do
-not establish that an existing desktop chat reloaded its MCP binding.
+The repository's [Git tags](https://github.com/Tiziano-AI/grokpair/tags)
+identify published source revisions; the shared
+[Tiziano AI catalog](https://github.com/Tiziano-AI/plugins) selects the
+revision offered as **`grokpair@tiziano-ai`**. Neither selector establishes an
+installed consumer's version. [RELEASE](RELEASE.md) records source checks,
+installed identity and useful fresh-caller acceptance separately.
 
 The implementation leaves approvals with each host's user-selected policy,
 identifies the caller as another agent in native prompt guidance, rejects bad
@@ -100,18 +98,17 @@ applicable native contract before a repair.
 
 ## Delivery and acceptance
 
-Candidate 2.3.2 has passed its generated-payload source checks, as recorded
-in [RELEASE](RELEASE.md#candidate-232--not-published). Authorized source
-publication, catalog promotion and installed verification remain separate
-steps. The completed 2.3.1 acceptance below is historical evidence for that
-release, not an acceptance claim for the candidate.
+Source version 2.3.2 has passed its generated-payload checks, as recorded in
+[RELEASE](RELEASE.md#source-232). Those source results do not establish
+publication, catalog selection, installation or consumer acceptance.
 
-The released 2.3.1 source is tagged `v2.3.1`. The shared catalog pins that exact
-commit; both product-local and shared-marketplace acquisition routes were
-qualified in isolated homes. The final ordinary distribution is
-`grokpair@tiziano-ai`, installed in both intended hosts with byte/mode and
-eight-tool registry parity. Useful fresh-caller acceptance reached the
-app-bundled Codex CLI and Claude Code CLI, not every desktop mode.
+Installed and useful fresh-caller acceptance is recorded for 2.3.1 and is not
+inherited by 2.3.2. For 2.3.1, both product-local and shared-marketplace
+acquisition routes were qualified in isolated homes. The selected
+`grokpair@tiziano-ai` payload matched the `v2.3.1` source in both intended
+hosts, with byte/mode and eight-tool registry parity. Useful fresh-caller
+acceptance reached the app-bundled Codex CLI and Claude Code CLI, not every
+desktop mode.
 
 Isolated installation proves that distribution route, not intended-home
 materialization or a desktop session's active package. Intended-home bytes,
@@ -125,8 +122,8 @@ The removal of packaged approval bypasses is qualified by the recorded
 native-host cycles, not inherited from the previous release's auto-allow
 evidence. [RELEASE](RELEASE.md) records the observations and their limits.
 
-The fresh guided CLI cycles do not qualify spontaneous skill selection, the
-full permission/Desktop/Workflow matrix, continued relay messaging, media
+The 2.3.1 fresh guided CLI cycles do not qualify spontaneous skill selection,
+the full permission/Desktop/Workflow matrix, continued relay messaging, media
 quality or every native attention method. The Claude caller produced an
 overlong note and exceeded its assigned scratch-file write scope; functional
 acceptance is not a claim of flawless caller behavior. Other projects that

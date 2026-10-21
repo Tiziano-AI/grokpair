@@ -7,20 +7,26 @@ of the exact tagged commit, installed bytes and modes match the tagged
 and a fresh caller in each host does useful work through that final package.
 Source checks establish none of those later steps.
 
-## Candidate 2.3.2 — not published
+Consult the repository's [Git tags](https://github.com/Tiziano-AI/grokpair/tags)
+for published source identities and the
+[Tiziano AI catalog](https://github.com/Tiziano-AI/plugins) for the revision
+offered by the shared marketplace. Neither selector alone establishes an
+installed consumer's version.
 
-Version 2.3.2 is a local release candidate scoped to documentation, caller
-guidance, plugin descriptions and listing artwork. It changes no native
+## Source 2.3.2
+
+Version 2.3.2 is scoped to documentation, caller guidance, plugin descriptions
+and listing artwork. It changes no native
 execution behavior, dependency, tool, public schema, runtime namespace,
 SQLite format or cursor contract.
 
-The candidate has not been published, installed or accepted as an end-to-end
-consumer release. Its generated payload passed all 271 tests and the complete
+Its generated payload passed all 271 tests and the complete
 [source gates](AGENTS.md#build-test-and-inspect), including package, MCP,
 skill and native checks and both strict Claude validations. These checks use
-no live provider and do not establish distribution or installed acceptance.
-The completed 2.3.1 observations below remain specific to that tagged payload;
-they are not 2.3.2 installed acceptance.
+no live provider and do not establish publication, catalog selection,
+installation or consumer acceptance. The 2.3.1 installed and
+consumer observations below remain specific to that tagged payload; they are
+not inherited by 2.3.2.
 
 ## Released 2.3.1
 
@@ -34,8 +40,8 @@ packaging, documentation, Git identity and attribution, not the qualified
 
 Both product-local native marketplace routes and the shared
 [Tiziano AI catalog](https://github.com/Tiziano-AI/plugins) were qualified in
-isolated homes. The final ordinary distribution is **`grokpair@tiziano-ai`**;
-the catalog pins the public source commit above and its `plugin/` subtree.
+isolated homes. The selected distribution was **`grokpair@tiziano-ai`**;
+the catalog pinned the public source commit above and its `plugin/` subtree.
 
 In the intended Codex and Claude Code installations, all 14 committed payload
 files matched the tagged source in bytes and executable modes. Fresh

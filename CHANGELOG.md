@@ -1,6 +1,6 @@
 # Changelog
 
-## 2.3.2 — Documentation and plugin presentation (unreleased)
+## 2.3.2 — Documentation and plugin presentation
 
 - **Clearer onboarding.** Lead with the shared `tiziano-ai` marketplace,
   explain prerequisites before installation, and use one coherent read-only
@@ -14,8 +14,8 @@
   execution behavior, dependency, public schema, runtime namespace, SQLite
   format or cursor contract changes.
 
-This is a local candidate, not a published or installed release. The 2.3.1
-acceptance in [RELEASE](RELEASE.md) remains specific to that payload.
+The 2.3.1 installed and consumer acceptance in [RELEASE](RELEASE.md) remains
+specific to that payload; it is not inherited by 2.3.2.
 
 ## 2.3.1 — Clean public source snapshot
 
