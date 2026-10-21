@@ -38,8 +38,8 @@ export function generatedFiles(pkg) {
     },
     interface: {
       displayName: PRODUCT,
-      shortDescription: "Grok as a detached collaborator while you work.",
-      longDescription: "Hand a detached Grok Build collaborator a complete brief (research, a review, an implementation in its own worktree, a document or media) and keep working. Wait for its result, read what Grok said and made, continue the same conversation, answer its questions, redirect or close it. You keep acceptance, integration and every claim.",
+      shortDescription: "A Grok Build collaborator working beside your agent.",
+      longDescription: "Delegate a bounded piece of work to Grok Build while your agent continues: research, a review, an alternative implementation in a native worktree, a document or media. Read the full result, ask for corrections in the same conversation and decide what to use. Requires Node.js and your own installed, authenticated Grok Build. Installation starts no collaborator; your agent remains responsible for integration and publication.",
       developerName: AUTHOR.name,
       category: "Productivity",
       capabilities: ["Interactive", "Read", "Write"],
@@ -51,11 +51,14 @@ export function generatedFiles(pkg) {
         "Have Grok research this question with sources; wait for its result and check the key claims.",
         "Give Grok a worktree to draft an alternative implementation, then inspect its diff.",
       ],
-      brandColor: "#111827",
+      composerIcon: "./skills/grokpair/assets/grokpair.svg",
+      logo: "./skills/grokpair/assets/grokpair.png",
+      brandColor: "#56365F",
     },
   };
   const claudePlugin = {
     ...common,
+    icon: "./skills/grokpair/assets/grokpair.png",
     mcpServers: {
       [PRODUCT]: { command: `\${CLAUDE_PLUGIN_ROOT}/bin/${PRODUCT}`, args: ["mcp"], timeout: TOOL_TIMEOUT_SECONDS * 1000 },
     },

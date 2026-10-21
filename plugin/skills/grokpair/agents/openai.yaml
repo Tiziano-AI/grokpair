@@ -1,6 +1,9 @@
 interface:
   display_name: "grokpair"
   short_description: "A Grok collaborator while you keep working"
+  icon_small: "./assets/grokpair.svg"
+  icon_large: "./assets/grokpair.png"
+  brand_color: "#56365F"
   default_prompt: "Use $grokpair to hand Grok a bounded task while you keep working, then read its answer and use what holds up."
 policy:
   allow_implicit_invocation: true

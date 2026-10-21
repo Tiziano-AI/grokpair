@@ -22,7 +22,7 @@ public contract.
 
 | Contract | Current | Owner |
 | --- | --- | --- |
-| Product version | 2.3.1 | `package.json` |
+| Product version | 2.3.2 (source candidate) | `package.json` |
 | Public schema | `"3"` | `PUBLIC_SCHEMA_VERSION` in `src/core.ts` |
 | Runtime contract | 2, directory `runtime-v2` | `RUNTIME_CONTRACT` in `src/agent-store.ts` |
 | SQLite format | 1 | `src/agent-store.ts` |
@@ -33,14 +33,19 @@ These are separate contracts that change independently. A runtime-contract
 change starts a new store directory; there is no migration, compatible reader
 or old-runtime lookup.
 
+Version 2.3.2 is a local documentation-and-icon candidate, not a published or
+installed release. It changes no execution behavior or public contract from
+2.3.1. [RELEASE](RELEASE.md) keeps candidate status separate from the completed
+2.3.1 qualification.
+
 Schema 3 changes held-key matching and bounded read/wait delivery. Runtime-v2,
 SQLite format 1 and existing cursors are retained, with no store migration or
 replay. Replacement requires a verified quiescent cutover of old consumers,
 not mixed old and new writers. MCP remains on the maintained v1 SDK and
 existing stdio protocol.
-MCP SDK v2 and modern protocol serving are
-held until the intended hosts support them as stable and Tiziano reopens that
-work; no split-package path, experimental host flags or compatibility layer is
+MCP SDK v2 and modern protocol serving are held until the intended hosts
+support them as stable and the maintainer explicitly resumes that work;
+no split-package path, experimental host flags or compatibility layer is
 part of grokpair.
 
 ## Why a bridge of this shape
@@ -126,7 +131,9 @@ that capture rather than retaining a native-output archive.
   server inline (`${CLAUDE_PLUGIN_ROOT}/bin/grokpair mcp`, timeout 660,000 ms);
 - `plugin/package.json`;
 - `.agents/plugins/marketplace.json` and `.claude-plugin/marketplace.json`,
-  the two marketplaces, both named `grokpair` and serving `./plugin`.
+  the two product-local marketplaces, both named `grokpair` and serving
+  `./plugin`. The separate `tiziano-ai` catalog references the public
+  repository's `plugin/` subtree at a reviewed release commit.
 
 `pnpm validate` fails on approval overrides, packaged hooks, drift from the
 generator, or `plugin/.mcp.json`, which Claude Code would load beside the
@@ -155,7 +162,7 @@ The rest of `plugin/` is hand-authored or built:
 | `plugin/bin/grokpair` | The two-line Node launcher every host and the shell run. |
 | `plugin/lib/grokpair.js` | The bundle `pnpm build` makes from `src/`. |
 | `plugin/schemas/grokpair-tools.schema.json` | The generated tool descriptions and input schemas. |
-| `plugin/skills/grokpair/` | The operating skill with its references; Codex reads only the frontmatter name and description plus `agents/openai.yaml`. |
+| `plugin/skills/grokpair/` | The operating skill and its references. For discovery, Codex uses the frontmatter name and description plus `agents/openai.yaml`; the body supplies operating guidance when the skill is selected. |
 | `plugin/agents/grok.md` | The Claude Code relay agent `grokpair:grok`; Codex ignores it. |
 | `plugin/LICENSE` | The authored license copied by the build into the installed payload. |
 | `plugin/THIRD_PARTY_NOTICES.md` | License and notice texts generated from packages contributing bytes to the bundle. |

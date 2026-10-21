@@ -36601,10 +36601,10 @@ import { randomUUID } from "node:crypto";
 // package.json
 var package_default = {
   name: "grokpair",
-  version: "2.3.1",
+  version: "2.3.2",
   private: true,
   type: "module",
-  description: "Delegate bounded work to a detached Grok Build collaborator (research, review, an implementation in its own worktree, documents or media), keep working, then read what Grok said and made.",
+  description: "Delegate research, reviews, code, documents or media to a detached Grok Build collaborator while your agent keeps working. Requires your own Grok Build installation and authentication.",
   license: "MIT",
   author: "Tiziano AI",
   homepage: "https://github.com/Tiziano-AI/grokpair#readme",

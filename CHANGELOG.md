@@ -1,18 +1,35 @@
 # Changelog
 
+## 2.3.2 — Documentation and plugin presentation (unreleased)
+
+- **Clearer onboarding.** Lead with the shared `tiziano-ai` marketplace,
+  explain prerequisites before installation, and use one coherent read-only
+  first contribution. Keep advanced tool and release-pinned examples
+  available without crowding the first path.
+- **Accurate caller guidance.** Clarify edit acknowledgments, retained-record
+  ordering, view-specific wait errors and continuation with returned cursors.
+  These corrections describe the existing behavior; they change no tool or
+  runtime contract.
+- **Plugin presentation.** Refine descriptions and listing artwork. No native
+  execution behavior, dependency, public schema, runtime namespace, SQLite
+  format or cursor contract changes.
+
+This is a local candidate, not a published or installed release. The 2.3.1
+acceptance in [RELEASE](RELEASE.md) remains specific to that payload.
+
 ## 2.3.1 — Clean public source snapshot
 
-- **One source.** Prepare a history-free public repository from the qualified
+- **One source.** Published a history-free public repository from the qualified
   implementation, with source, tests, generated payload and both native
   marketplace manifests in the same tree. This changes no execution behavior,
   tool, schema, runtime namespace or cursor contract from 2.3.0.
-- **Portable onboarding.** Remove maintainer-specific installation diaries,
-  identify approvals as user-owned, link native setup and explain installation,
+- **Portable onboarding.** Removed maintainer-specific installation diaries,
+  identified approvals as user-owned, linked native setup and explained installation,
   first use, removal and the distinction between source and host acceptance.
-- **Complete attribution.** Include esbuild's injected runtime helper license
+- **Complete attribution.** Included esbuild's injected runtime helper license
   alongside the bundle's package-input licenses. Identify the bundle as
   generated and transformed; no native compiler binary is distributed.
-- **Release identity.** Use a new version for the new public Git root rather
+- **Release identity.** Used a new version for the new public Git root rather
   than rebinding the pre-publication `v2.3.0` tag to unrelated ancestry.
 
 ## 2.3.0 — Pre-publication implementation

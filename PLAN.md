@@ -2,16 +2,20 @@
 
 ## Where it stands
 
-The implementation is **2.3.1**, with public schema 3, runtime-v2, SQLite
-format 1 and `gp1.` cursors. It retains one execution core and the same eight
-MCP/CLI tools. The public snapshot changes packaging documentation and legal
-attribution without changing native execution.
+The current source is the **2.3.2 release candidate**, with public schema 3,
+runtime-v2, SQLite format 1 and `gp1.` cursors. It retains one execution core
+and the same eight MCP/CLI tools. This candidate refines public documentation,
+caller guidance, plugin descriptions and listing artwork, without changing
+native execution, dependencies or public contracts. It has not been published,
+installed or accepted as an end-to-end consumer release.
 
-[RELEASE](RELEASE.md) records qualification performed before the clean public
-snapshot and the procedure for qualifying an exact distributed release.
-Those earlier observations do not establish installation or acceptance of a
-new public commit or tag. Installing files does not reload an existing
-caller's MCP binding or end detached work.
+Version 2.3.1 is public and distributed as **`grokpair@tiziano-ai`** through
+the shared [Tiziano AI marketplace](https://github.com/Tiziano-AI/plugins).
+Its final installed payload and registries matched the tagged source in
+Codex and Claude Code. Fresh app-bundled Codex and Claude Code CLI callers
+completed useful collaboration, a substantive follow-up and explicit closure.
+[RELEASE](RELEASE.md) records those observations and their limits. They do
+not establish that an existing desktop chat reloaded its MCP binding.
 
 The implementation leaves approvals with each host's user-selected policy,
 identifies the caller as another agent in native prompt guidance, rejects bad
@@ -57,8 +61,9 @@ behavior, installed identity, discovery or useful fresh-host acceptance.
 
 ## Known limits and remaining work
 
-These are known gaps, not capabilities claimed by this release. Native details derived from earlier inspections
-must be rechecked against the applicable native contract before a repair.
+These are known gaps, not capabilities claimed by this release. Native
+details derived from earlier inspections must be rechecked against the
+applicable native contract before a repair.
 
 - **Background work visibility.** The bridge retains shell-task start and
   completion but not every native background snapshot, typed subagent,
@@ -95,17 +100,18 @@ must be rechecked against the applicable native contract before a repair.
 
 ## Delivery and acceptance
 
-The local candidate must pass all source gates, adversarial Grok review and
-an isolated built-payload rehearsal. That is preparation, not release.
+Candidate 2.3.2 has passed its generated-payload source checks, as recorded
+in [RELEASE](RELEASE.md#candidate-232--not-published). Authorized source
+publication, catalog promotion and installed verification remain separate
+steps. The completed 2.3.1 acceptance below is historical evidence for that
+release, not an acceptance claim for the candidate.
 
-A completed release needs exact tagged source, isolated qualification of each
-supported marketplace route, one final distribution installed in the intended
-homes, byte/mode and registry parity, effective CLI and desktop binding, and
-useful fresh Codex and Claude callers on that final distribution. Qualifying
-another route never requires installing and removing it in intended homes.
-For the current publication candidate, the proposed ordinary distribution is
-`grokpair@tiziano-ai`, conditional on authorized, verified SHA-pinned catalog
-entries; that listing and its installation have not occurred.
+The released 2.3.1 source is tagged `v2.3.1`. The shared catalog pins that exact
+commit; both product-local and shared-marketplace acquisition routes were
+qualified in isolated homes. The final ordinary distribution is
+`grokpair@tiziano-ai`, installed in both intended hosts with byte/mode and
+eight-tool registry parity. Useful fresh-caller acceptance reached the
+app-bundled Codex CLI and Claude Code CLI, not every desktop mode.
 
 Isolated installation proves that distribution route, not intended-home
 materialization or a desktop session's active package. Intended-home bytes,
@@ -119,15 +125,18 @@ The removal of packaged approval bypasses is qualified by the recorded
 native-host cycles, not inherited from the previous release's auto-allow
 evidence. [RELEASE](RELEASE.md) records the observations and their limits.
 
-The fresh guided representative CLI cycles do not qualify spontaneous skill
-selection, the full permission/Desktop/Workflow matrix, continued relay
-messaging, media quality or every native attention method. Examples must not
-claim those paths passed. Other projects that refer to older bridge names
-remain with their owners; this release changes no consumer repository.
+The fresh guided CLI cycles do not qualify spontaneous skill selection, the
+full permission/Desktop/Workflow matrix, continued relay messaging, media
+quality or every native attention method. The Claude caller produced an
+overlong note and exceeded its assigned scratch-file write scope; functional
+acceptance is not a claim of flawless caller behavior. Other projects that
+refer to older bridge names remain with their owners; this release changes
+no consumer repository.
 
 ## Decisions reserved to the owner
 
-- Shared-marketplace distribution requires separate destination-specific authority.
+- Future source publication and catalog promotion require destination-specific
+  authority; the completed release is not standing approval for another push.
 - Whether to adopt additional native secret restrictions. Profile names
   alone prove neither provenance nor enforcement.
 - Whether to remove Claude session variables, including messaging tokens,
@@ -145,5 +154,5 @@ consumer need and native contract. More host integrations must preserve the
 required timeouts and lifecycle, not create per-host execution cores.
 
 MCP SDK v2, modern protocol serving and preparatory compatibility machinery
-remain **held** until intended hosts support them as stable and Tiziano
-reopens the work. Do not add split packages or experimental host flags.
+remain **held** until intended hosts support them as stable and the maintainer
+explicitly resumes the work. Do not add split packages or experimental host flags.

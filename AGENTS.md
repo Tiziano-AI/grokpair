@@ -16,9 +16,10 @@ server (`grokpair mcp`) and as the same calls on the command line
 (`grokpair <tool> [json | -]`). They write to a transactional SQLite mailbox,
 one per collaborator, and one resident detached worker per collaborator holds
 the official ACP SDK connection to `grok agent stdio`. Codex and Claude Code
-install it as a native plugin from this repository; the name `grokpair` is the
-same for the repository, plugin, marketplace, MCP server, command, skill,
-environment prefix and store.
+install it as a native plugin from this repository. The name `grokpair` is
+shared by the repository, plugin, product-local marketplace, MCP server,
+command, skill, environment prefix and store. The ordinary shared marketplace
+is `tiziano-ai`.
 
 ## Where things live
 
@@ -165,9 +166,9 @@ views, pagination, attention expiry and recovery.
   large incoming frames rather than adopt the SDK's 32 MiB default; this is
   a finite transport ceiling, not a memory-safety guarantee. The MCP stdio
   transport keeps `maxBufferSize: Infinity`. MCP SDK v2 and modern protocol
-  serving are held until intended hosts support them as stable and Tiziano
-  reopens that work; do not add split packages, experimental host flags or
-  preparatory compatibility machinery.
+  serving are held until intended hosts support them as stable and the
+  maintainer explicitly resumes that work; do not add split packages,
+  experimental host flags or preparatory compatibility machinery.
 - **No recursion.** The worker sets `GROKPAIR_COLLABORATOR` in Grok's
   environment; a grokpair started beneath it serves no tools, the CLI refuses,
   and `internal-worker` refuses, so Grok cannot become another collaborator's
@@ -195,7 +196,7 @@ views, pagination, attention expiry and recovery.
   Configuration can partly succeed; never invent rollback or in-flight
   retargeting.
 - **Views.** The result view groups a page by what the caller acts on; the
-  records view keeps the complete typed stream. The result view omits, it never
+  records view keeps all retained typed records. The result view omits, it never
   rewrites: text stays Grok's text and every omitted record remains in the
   records view.
 - **Inputs.** Attachments need a path and a kind, `reference` or `image`. A

@@ -1,7 +1,11 @@
 # Public capabilities
 
-grokpair **2.3.1** · public schema **3** · runtime-v2 ·
+grokpair **2.3.2 (source candidate)** · public schema **3** · runtime-v2 ·
 SQLite format 1 · cursors `gp1.`
+
+The 2.3.2 documentation-and-icon candidate changes no runtime behavior or
+public contract from 2.3.1. It is not yet published or consumer-qualified;
+[RELEASE](../RELEASE.md) records that distinction.
 
 This is the public contract: the eight tools, what each accepts and returns,
 how output is read and continued, and the command line that mirrors them. The

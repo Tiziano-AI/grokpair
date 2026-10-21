@@ -1,14 +1,13 @@
-# Grok as extra arms for the calling agent
+# Grok working beside the calling agent
 
-grokpair exists to make a calling agent better at the task in front of it. It
-gives the agent disposable intelligence and extra arms: a Grok collaborator it
-can hand a bounded piece of work, keep working beside, and then consult. Used
-well, it improves the caller's work, keeps long investigations out of the
-caller's context, and raises the signal and quality of whatever the task is:
-an independent review or counterexample, research with sources, a candidate
-implementation to compare, a document, images or video. The agent using it is
-the product's user, so grokpair has to be ergonomic for an agent: little to
-learn, few calls, results it can use without reconstructing them.
+grokpair helps a calling agent bring a second perspective or a parallel
+contribution into its work. The caller gives Grok a bounded brief, continues
+its own work and then decides what to use: an independent review or
+counterexample, research with sources, a candidate implementation, a document,
+images or video. Long investigations stay in Grok's conversation instead of
+filling the caller's context. The calling agent is the product's user, so
+grokpair should require little to learn and return results the caller can
+inspect without reconstructing them.
 
 It serves whichever harness the caller runs in. Codex and Claude Code are the
 hosts it must serve well; any MCP host or any agent with a shell can use it

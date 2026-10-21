@@ -4,13 +4,13 @@
     "name": "Tiziano AI"
   },
   "metadata": {
-    "description": "Delegate bounded work to a detached Grok Build collaborator (research, review, an implementation in its own worktree, documents or media), keep working, then read what Grok said and made."
+    "description": "Delegate research, reviews, code, documents or media to a detached Grok Build collaborator while your agent keeps working. Requires your own Grok Build installation and authentication."
   },
   "plugins": [
     {
       "name": "grokpair",
       "source": "./plugin",
-      "description": "Delegate bounded work to a detached Grok Build collaborator (research, review, an implementation in its own worktree, documents or media), keep working, then read what Grok said and made.",
+      "description": "Delegate research, reviews, code, documents or media to a detached Grok Build collaborator while your agent keeps working. Requires your own Grok Build installation and authentication.",
       "category": "productivity",
       "homepage": "https://github.com/Tiziano-AI/grokpair"
     }

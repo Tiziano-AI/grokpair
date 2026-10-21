@@ -1,18 +1,17 @@
 ---
 name: grokpair
-description: "Delegate a bounded task to a detached Grok Build collaborator (research, a review, a candidate implementation in its own worktree, a document, images or video), keep working while it runs, then read Grok's answer and decide what to use."
+description: "Delegate a bounded task to a detached Grok Build collaborator: research, review, a candidate implementation, documents or media. Keep working, then inspect Grok's answer and files before deciding what to use."
 ---
 
 # grokpair
 
-grokpair gives you a Grok Build collaborator that works beside you. It runs
-detached with its own model, tools, skills and conversation, so it costs your
-context only the brief you write and the answer you read. Use it for an
+grokpair gives you a Grok Build collaborator that works beside you, detached
+with its own model, tools, skills and conversation. Use it for an
 independent view (a review, a second opinion, a counterexample), for work that
 can run in parallel with yours (research, a candidate implementation, a
 document, images or video), or to keep a long investigation out of your own
-context. You stay responsible for what you adopt: Grok contributes, you
-decide, integrate and make the claims.
+context. Grok contributes; you inspect the result, decide what to use and stay
+responsible for integration and final claims.
 
 The tools are `grok_spawn`, `grok_send`, `grok_wait`, `grok_read`,
 `grok_list`, `grok_respond`, `grok_interrupt` and `grok_close`. Where the
@@ -28,8 +27,8 @@ reviews it, so the Agent result itself may be only a short note.
 
 ## Write a brief Grok can act on
 
-Grok sees none of your conversation, instructions or loaded skills. The task
-you send is everything it knows, so give it:
+Grok does not inherit your conversation, instructions or loaded skills. Give
+it a self-contained brief with:
 
 - the purpose, and the decision or change the result will feed;
 - the facts and sources that matter, with absolute paths, and what you already
@@ -117,8 +116,9 @@ targets' input cursors, and move delivered targets behind excluded ones in
 the next wait. Nothing was delivered for an omitted target.
 
 A large structured record arrives in `fragments`, not as a partial native
-object. Keep reading with the same cursor, concatenate contiguous `json`
-pieces for one `record_id` by `offset`, and parse only when `complete` is true.
+object. Continue with each page's returned cursor, concatenate contiguous
+`json` pieces for one `record_id` by `offset`, and parse only when `complete`
+is true.
 A page's `fragment_reset` names an incomplete version to discard: reading
 resumes before that record, preserving intervening changes, and its current
 version arrives normally or as new fragments at offset 0. Read attention

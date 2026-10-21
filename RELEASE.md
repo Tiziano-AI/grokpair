@@ -7,50 +7,82 @@ of the exact tagged commit, installed bytes and modes match the tagged
 and a fresh caller in each host does useful work through that final package.
 Source checks establish none of those later steps.
 
-## Qualification inherited by the public source snapshot
+## Candidate 2.3.2 — not published
 
-The 2.3.0 implementation was qualified before the clean public source
-snapshot. The observed environment was macOS arm64 with Grok Build 1.0.62,
-Codex 0.163.0 and Claude Code 2.1.304. These observations describe that build
-and those consumers; they do not establish installation or acceptance of a new
-public commit, tag or repository. Version 2.3.1 changes documentation, package
-identity and legal notices, not the execution core or public contract.
+Version 2.3.2 is a local release candidate scoped to documentation, caller
+guidance, plugin descriptions and listing artwork. It changes no native
+execution behavior, dependency, tool, public schema, runtime namespace,
+SQLite format or cursor contract.
 
-The canonical isolated source runner passed all 271 tests. Build, validation,
-MCP, skill/native checks, both strict Claude manifest/marketplace validations
-and the whitespace check passed. Deterministic regressions cover exact spawn
-retries, native queue removal, complete serialized read/wait budgets,
-structured-record fragments and version resets, delivered-only wait cursors,
-optional file snapshots and Unicode continuation. These establish bridge
-behavior against deterministic peers, not live provider quality.
+The candidate has not been published, installed or accepted as an end-to-end
+consumer release. Its generated payload passed all 271 tests and the complete
+[source gates](AGENTS.md#build-test-and-inspect), including package, MCP,
+skill and native checks and both strict Claude validations. These checks use
+no live provider and do not establish distribution or installed acceptance.
+The completed 2.3.1 observations below remain specific to that tagged payload;
+they are not 2.3.2 installed acceptance.
 
-Adversarial Grok review identified one drained-page budget defect. The compact
-fallback was removed, a regression demonstrated the defect before correction,
-and a focused source follow-up confirmed the correction. The complete source
-gates passed after the repair. That follow-up did not rerun tests or inspect
-the generated bundle.
+## Released 2.3.1
 
-Both host marketplace routes were exercised in isolated and intended homes
-against the pre-publication tag. All four installed payloads matched the 14
-committed product files, bytes and executable modes. Fresh registries exposed
-the eight exact tool descriptions and schemas. The installed Codex bundle
-passed all 75 public MCP/worker/official-ACP integration tests against
-deterministic native peers; the Claude payload was byte-identical.
+The public source is tagged
+[`v2.3.1`](https://github.com/Tiziano-AI/grokpair/tree/v2.3.1), commit
+`fed5d8beda9a3fd7bb26947c4962c75443377f6f`. Version 2.3.1 changes public
+packaging, documentation, Git identity and attribution, not the qualified
+2.3.0 execution core or public contract.
 
-Fresh Codex and Claude CLI callers completed guided representative
-collaboration through their selected installed plugins. Each caller worked
-independently in parallel, read the complete native contribution and actual
-file, requested a substantive correction in the same conversation, inspected
-the revised result and explicitly closed its collaborator. Final records were
-drained, operation and queue counts were zero, and worker/provider absence was
-observed separately. No process was signaled and no app restart was used.
+### Distribution and installed identity
 
-Those cycles used the hosts' existing user-selected approval and permission
-settings, without added grants, hooks or invocation overrides. They qualify
-representative CLI collaboration, not spontaneous skill selection, every
-permission/Desktop/Workflow mode, media quality, every native attention method
-or existing desktop-chat bindings. A completed native turn does not certify
-generated content or prove unreported background effects absent.
+Both product-local native marketplace routes and the shared
+[Tiziano AI catalog](https://github.com/Tiziano-AI/plugins) were qualified in
+isolated homes. The final ordinary distribution is **`grokpair@tiziano-ai`**;
+the catalog pins the public source commit above and its `plugin/` subtree.
+
+In the intended Codex and Claude Code installations, all 14 committed payload
+files matched the tagged source in bytes and executable modes. Fresh
+registries exposed server version 2.3.1, public schema 3 and the exact eight
+tool names, descriptions and input schemas. The actual caller MCP servers
+and detached workers loaded those installed bundles, not a source checkout.
+
+### Useful fresh-caller acceptance
+
+Fresh app-bundled Codex `0.163.0-alpha.10.2` and Claude Code CLI `2.1.304`
+performed representative parallel collaboration through the final package,
+on macOS arm64 with Node `24.22.0` and Grok Build `1.0.62`. Each caller read
+the installed skill, worked independently while Grok ran, inspected the full
+contribution and actual output file, requested a substantive correction in
+the same native conversation, inspected the revision and closed its own
+collaborator. Native closure, drained records and worker/provider process
+absence were observed separately. Unrelated retained collaborators were
+left unchanged.
+
+The cycles preserved the hosts' user-selected approval and permission
+settings; Grokpair added no grants, hooks or invocation overrides. The Claude
+caller produced an overlong recovery note and briefly wrote a scratch copy
+outside its assigned output scope, then removed that copy. Retained records
+were preserved. The functional result is not a claim of flawless caller
+behavior or fully accepted artifact quality.
+
+This qualifies the observed fresh CLI paths, not spontaneous skill selection,
+every permission mode, Claude Desktop, login or Workflow, continued relay
+messaging, media quality, every native attention method or reload of existing
+desktop chats. No attention request arose in these cycles. A completed turn
+does not certify content or prove unreported background effects absent.
+
+### Source qualification
+
+Before the public snapshot, the unchanged execution core passed all 271
+tests and the complete [source gates](AGENTS.md#build-test-and-inspect).
+Deterministic regressions cover exact spawn retries, native queue removal,
+complete serialized read/wait budgets, structured-record fragments and
+version resets, delivered-only wait cursors, optional file snapshots and
+Unicode continuation. An adversarial review finding on drained-page budgets
+was corrected and covered by a regression before those gates passed.
+
+The pre-publication installed Codex bundle also passed all 75 public
+MCP/worker/official-ACP integration tests against deterministic native peers;
+the Claude payload was byte-identical. These establish bridge behavior
+against the tested peers, not live provider quality or the identity of an
+unobserved consumer. They do not replace the final installed checks above.
 
 ## Release procedure
 
@@ -77,9 +109,9 @@ without making the private development history public. Never push a private
 clone's refs or use a mirror push for a history-free publication.
 
 An annotated release tag belongs on the commit carrying that version.
-The product-local marketplace is named `grokpair`. Any shared catalog is a
-separate distribution destination; do not advertise that installation route
-before its entry exists and has been checked. Before publication is accepted,
+The product-local marketplace is named `grokpair`; the ordinary shared
+marketplace is `tiziano-ai`. A catalog promotion is a separate publication
+effect and must pin the reviewed release commit. Before publication is accepted,
 enable and verify the private vulnerability-reporting route named in
 [SECURITY](SECURITY.md).
 

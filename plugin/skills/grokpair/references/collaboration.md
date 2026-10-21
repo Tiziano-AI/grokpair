@@ -84,8 +84,9 @@ edit takes no new attachments. To replace the inputs of a queued prompt, ask
 `grok_interrupt` to remove that exact `prompt_id`, then read the operation
 outcome and queue before sending a replacement `follow_up`. Admission alone
 does not prove removal; if the prompt started instead, inspect what ran before
-deciding what new work is needed. An edit acknowledgment says only that the edit happened: a later
-queue snapshot and turn say what ran.
+deciding what new work is needed. An admitted edit is not proof that the
+queue changed. Inspect the operation outcome and latest queue; a later turn
+shows what ran.
 
 The summary's `queue_observation` is `{status: "observed"}` or
 `{status: "unknown", reason}`. While it is unknown, `counts.queued_prompts` is
@@ -237,8 +238,8 @@ if a write fails, its text stays readable there. A `text_file` is offered only
 when its contents match the database's current turn; an older file left behind
 by a failed rewrite is not offered.
 
-The records view (`view: "records"`) is the complete typed stream in the
-order Grok produced it: `content` fragments with `prompt_id`, `block_index`
+The records view (`view: "records"`) returns all retained typed records in
+change order: `content` fragments with `prompt_id`, `block_index`
 and `native_message_id`, `turn`, every `operation` with its effects, all
 `attention`, `file`, `issue`, `background`, and the observations the result
 view leaves out: `queue`, `native_options`, `native_capabilities` and
@@ -268,7 +269,7 @@ structured records arrive in `fragments` rather than exceeding the budget:
 }
 ```
 
-Continue with the page's same cursor. Concatenate contiguous `json` pieces
+Continue with each page's returned cursor. Concatenate contiguous `json` pieces
 within the same `record_id` and parse after `complete: true`; they encode the
 public retained record, including its `type`, not a partial native request.
 Do not answer until the full attention payload is available. The reading can
@@ -306,8 +307,13 @@ stopped working, needs attention or can no longer be observed; with `until:
 `timeout_ms` defaults to 120,000 and allows up to 600,000; 0 takes a snapshot.
 A timeout returns what is available and cancels nothing. One unreadable
 target or bad cursor is reported on that target without failing the others:
-its entry has `status: "unavailable"`, a null cursor and the problem in
-`issues`.
+its entry has `status: "unavailable"` and a null cursor. The problem appears
+in `issues` in the result view, or as a `type: "issue"` entry in `records`
+in the records view. Keep that target's input cursor for a separate
+`grok_read`, and exclude the unavailable target from subsequent `grok_wait`
+calls on the remaining targets. An unavailable target counts as settled;
+passing it again with a null cursor makes the wait return immediately.
+Do not pass its returned null cursor or a reconstructed cursor to `grok_wait`.
 
 A wait fits the combined result, so `agents` can contain only a subset of the
 requested targets. Update only included IDs' cursors; an excluded target keeps
