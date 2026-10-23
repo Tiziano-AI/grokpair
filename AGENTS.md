@@ -50,7 +50,7 @@ the owner rather than restating it somewhere else.
 In the code:
 
 - `package.json` owns the product name, version, description, keywords, the
-  Node floor (`>=24.21`) and the pinned pnpm. Public schema, runtime directory,
+  Node floor (`>=24.22.1`) and the pinned pnpm. Public schema, runtime directory,
   SQLite format and cursor versions are separate contracts; ARCH states the
   current ones.
 - `scripts/manifests.mjs` owns host packaging. `pnpm build` typechecks,

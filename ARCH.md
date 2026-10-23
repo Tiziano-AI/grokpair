@@ -22,19 +22,20 @@ public contract.
 
 | Contract | Current | Owner |
 | --- | --- | --- |
-| Product version | 2.3.2 | `package.json` |
+| Product version | 2.3.3 | `package.json` |
 | Public schema | `"3"` | `PUBLIC_SCHEMA_VERSION` in `src/core.ts` |
 | Runtime contract | 2, directory `runtime-v2` | `RUNTIME_CONTRACT` in `src/agent-store.ts` |
 | SQLite format | 1 | `src/agent-store.ts` |
 | Cursors | `gp1.` for read and wait, `gp1.list.` for list | `src/agent-service.ts` |
-| Node floor | `>=24.21` | `package.json` engines |
+| Node floor | `>=24.22.1` | `package.json` engines |
 
 These are separate contracts that change independently. A runtime-contract
 change starts a new store directory; there is no migration, compatible reader
 or old-runtime lookup.
 
-Version 2.3.2 refines documentation, caller guidance and plugin presentation
-without changing execution behavior or public contracts from 2.3.1. The
+Version 2.3.3 updates the ACP SDK, Zod and pinned pnpm and raises the Node
+floor to the patched 24.22.1 release. The public protocol and persisted
+contracts remain unchanged. The
 repository's [Git tags](https://github.com/Tiziano-AI/grokpair/tags) identify
 published source; the shared [catalog](https://github.com/Tiziano-AI/plugins)
 selects its offered revision. [RELEASE](RELEASE.md) records source qualification
@@ -85,9 +86,13 @@ REST executor, daemon, watchdog, lease, replay loop or per-turn provider
 restart. The worker is started detached with no stdio, as its own session
 leader, so a caller's terminal never reaches Grok.
 
-ACP SDK 1.8.0's stable v1 entrypoint supplies that connection. Its incoming
-NDJSON framing defaults to a 32 MiB message limit introduced after the
-previously pinned 1.5.0. The adapter explicitly passes
+ACP SDK 2.0.1's default entrypoint supplies stable ACP v1, not experimental
+ACP v2. The adapter uses the app API, not the removed legacy connection
+classes. Session resume, close, configuration options and every standard
+payload field it consumes belong to the stable v1 profile; Grok's custom
+methods have explicit identity parsers. No unstable-feature entrypoint or
+draft protocol is selected. Its incoming NDJSON framing defaults to a
+32 MiB message limit. The adapter explicitly passes
 `maxMessageBytes: Number.MAX_SAFE_INTEGER` to official `ndJsonStream` rather
 than introduce that smaller cutoff into existing large-output behavior.
 The option requires a positive safe integer and does not accept `Infinity`.

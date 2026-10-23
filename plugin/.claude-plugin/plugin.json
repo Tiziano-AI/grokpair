@@ -1,6 +1,6 @@
 {
   "name": "grokpair",
-  "version": "2.3.2",
+  "version": "2.3.3",
   "description": "Delegate research, reviews, code, documents or media to a detached Grok Build collaborator while your agent keeps working. Requires your own Grok Build installation and authentication.",
   "author": {
     "name": "Tiziano AI",

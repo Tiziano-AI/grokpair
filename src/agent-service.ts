@@ -287,7 +287,7 @@ function workerCommand(environment: NodeJS.ProcessEnv): { node: string; entrypoi
     : (environment.PATH ?? "").split(delimiter).filter(isAbsolute).map(directory => join(directory, "node")).find(isExecutable);
   if (node === undefined) {
     throw new AgentError("worker_unavailable", `The Node executable this grokpair server started from is gone (${process.execPath}), typically removed by an upgrade while this server kept running, and no node is on its PATH to start a worker with.`,
-      "Make Node >=24.21 available as node on the PATH this host gives grokpair, then start a new session. Existing collaborators stay readable and closable; nothing was admitted.",
+      "Make Node >=24.22.1 available as node on the PATH this host gives grokpair, then start a new session. Existing collaborators stay readable and closable; nothing was admitted.",
       { server_executable: process.execPath });
   }
   return { node, entrypoint };

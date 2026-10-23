@@ -13,6 +13,41 @@ for published source identities and the
 offered by the shared marketplace. Neither selector alone establishes an
 installed consumer's version.
 
+## Source 2.3.3
+
+Version 2.3.3 updates ACP SDK 1.8.0 to 2.0.1, Zod 4.6.6 to 4.6.7 and
+pinned pnpm 12.11.2 to 12.15.0. Node now requires the security-patched
+`>=24.22.1`; the build target preserves that exact patch floor. The ACP
+package's default remains stable protocol v1, and the existing app API and
+custom-method parsers remain in use. The MCP-v2 hold, public schema 3,
+runtime-v2, SQLite format 1, cursors and eight tools are unchanged.
+
+Source qualification on 23 October 2026 used Node 24.22.1 and pnpm 12.15.0.
+The frozen, script-disabled install passed with lockfile policy checking
+enabled. The exact minimum-release-age exception for ACP 2.0.1 follows review
+of its official release, migration guide and registry provenance; the
+provenance source commit matches the upstream tag
+`2ab61518f7079ef5f6c7a961f0ebcab23ef5f59d`. The general age policy remains
+active. Other direct dependencies are current within the adopted Node 24
+and MCP-v1 lines; adopting Node 26 types or held MCP-v2 is not part of this
+refresh.
+
+All 271 tests and the complete [source gates](AGENTS.md#build-test-and-inspect)
+passed against the rebuilt payload. The deterministic ACP peers cover the
+public MCP path and real detached worker; no live Grok inference ran. Strict
+Claude validation passed with one directory warning for an ignored,
+untracked `plugin/.DS_Store`, which is not in the committed Git payload.
+The registry audit reported zero advisories across 158 dependencies;
+signature verification reported all 158 verified, with none invalid or
+missing. These are registry observations, not a guarantee of universal
+vulnerability or malware absence.
+
+Adversarial review through Grokpair remains outstanding. This is a source
+candidate, not a completed release: no 2.3.3 tag, public push, shared-catalog
+promotion, marketplace acquisition, intended-home installation or fresh-host
+acceptance has been performed. The installed and consumer observations for
+2.3.1 below are not inherited by this candidate.
+
 ## Source 2.3.2
 
 Version 2.3.2 is scoped to documentation, caller guidance, plugin descriptions

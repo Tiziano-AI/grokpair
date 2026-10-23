@@ -1,2 +1,5 @@
 allowBuilds:
   esbuild: true
+# Exact direct update reviewed against its upstream release and registry provenance.
+minimumReleaseAgeExclude:
+  - '@agentclientprotocol/sdk@2.0.1'

@@ -2,11 +2,12 @@
 
 ## Where it stands
 
-The current source is **2.3.2**, with public schema 3, runtime-v2, SQLite
+The current source is **2.3.3**, with public schema 3, runtime-v2, SQLite
 format 1 and `gp1.` cursors. It retains one execution core
-and the same eight MCP/CLI tools. This version refines public documentation,
-caller guidance, plugin descriptions and listing artwork, without changing
-native execution, dependencies or public contracts.
+and the same eight MCP/CLI tools. This version updates ACP SDK to 2.0.1,
+Zod to 4.6.7 and pinned pnpm to 12.15.0 and raises the Node floor to
+`>=24.22.1`. ACP remains on stable protocol v1; no MCP-v2 work is resumed
+and no public or persisted contract changes.
 
 The repository's [Git tags](https://github.com/Tiziano-AI/grokpair/tags)
 identify published source revisions; the shared
@@ -98,12 +99,12 @@ applicable native contract before a repair.
 
 ## Delivery and acceptance
 
-Source version 2.3.2 has passed its generated-payload checks, as recorded in
-[RELEASE](RELEASE.md#source-232). Those source results do not establish
+Source preparation for 2.3.3 and its remaining review and delivery limits are
+recorded in [RELEASE](RELEASE.md#source-233). Source results do not establish
 publication, catalog selection, installation or consumer acceptance.
 
 Installed and useful fresh-caller acceptance is recorded for 2.3.1 and is not
-inherited by 2.3.2. For 2.3.1, both product-local and shared-marketplace
+inherited by 2.3.3. For 2.3.1, both product-local and shared-marketplace
 acquisition routes were qualified in isolated homes. The selected
 `grokpair@tiziano-ai` payload matched the `v2.3.1` source in both intended
 hosts, with byte/mode and eight-tool registry parity. Useful fresh-caller

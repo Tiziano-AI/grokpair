@@ -1,5 +1,23 @@
 # Changelog
 
+## 2.3.3 — Stable dependency refresh
+
+- **Current upstream dependencies.** Update ACP SDK 1.8.0 to 2.0.1, Zod
+  4.6.6 to 4.6.7 and pinned pnpm 12.11.2 to 12.15.0. The ACP package's
+  default remains stable protocol v1; no experimental ACP-v2 or held MCP-v2
+  migration is included. Other direct runtime and development dependencies
+  are already current within the adopted Node 24 and MCP-v1 lines.
+- **Patched Node floor.** Require Node `>=24.22.1`, which incorporates the
+  [21 October security fixes](https://nodejs.org/en/blog/vulnerability/october-2026-security-releases).
+  The build target preserves the exact patch floor instead of accepting
+  vulnerable Node 24.22.0 through a rounded minor requirement.
+- **One generated payload.** Rebuild the bundle, schemas, host manifests and
+  dependency notices together. Public schema 3, runtime-v2, SQLite format 1,
+  cursors and the eight tools are unchanged.
+
+[RELEASE](RELEASE.md#source-233) records source checks and the separate
+review, publication and consumer-acceptance limits.
+
 ## 2.3.2 — Documentation and plugin presentation
 
 - **Clearer onboarding.** Lead with the shared `tiziano-ai` marketplace,

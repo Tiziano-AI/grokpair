@@ -1,6 +1,6 @@
 {
   "name": "grokpair",
-  "version": "2.3.2",
+  "version": "2.3.3",
   "private": true,
   "type": "module",
   "description": "Delegate research, reviews, code, documents or media to a detached Grok Build collaborator while your agent keeps working. Requires your own Grok Build installation and authentication.",
@@ -25,7 +25,7 @@
     "delegation",
     "subagent"
   ],
-  "packageManager": "pnpm@12.11.2+sha512.25a51652a196785af5f28bda6dfe8dc582ebefa4ac1d180221ce1390231c5fb76637822ea4b6e4633ce74acdcb0a77f725af11bad38177fdeddaee818a955cb9",
+  "packageManager": "pnpm@12.15.0+sha512.b3951d6d6ff4a9f13dc7cf56cd28d2b8eb37dbcc9c68e52e1e1191873ea9f82a017287ab50baadc5ccc494f036c67c0e47eb13608c2fa36f47711b61ea128e61",
   "bin": {
     "grokpair": "plugin/bin/grokpair"
   },
@@ -50,14 +50,14 @@
     "native:check": "node scripts/check-no-native.mjs"
   },
   "engines": {
-    "node": ">=24.21"
+    "node": ">=24.22.1"
   },
   "dependencies": {
-    "@agentclientprotocol/sdk": "1.8.0",
+    "@agentclientprotocol/sdk": "2.0.1",
     "@modelcontextprotocol/sdk": "1.32.1",
     "ajv": "8.20.0",
     "ajv-formats": "3.0.1",
-    "zod": "4.6.6"
+    "zod": "4.6.7"
   },
   "devDependencies": {
     "@types/node": "24.19.2",

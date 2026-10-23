@@ -2,10 +2,10 @@ import { build } from "esbuild";
 
 export function nodeTargetFromEngineFloor(engineFloor) {
   const match = typeof engineFloor === "string"
-    ? /^>=(?<version>\d+\.\d+)$/u.exec(engineFloor)
+    ? /^>=(?<version>\d+\.\d+(?:\.\d+)?)$/u.exec(engineFloor)
     : null;
   if (!match?.groups?.version) {
-    throw new Error(`Node engine floor must be an exact >=major.minor value, found ${String(engineFloor)}`);
+    throw new Error(`Node engine floor must be an exact >=major.minor or >=major.minor.patch value, found ${String(engineFloor)}`);
   }
   return `node${match.groups.version}`;
 }

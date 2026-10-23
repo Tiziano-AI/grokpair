@@ -19,7 +19,7 @@ can use the same eight tools through MCP or the command line.
 
 ## Requirements
 
-- Node `>=24.21`, as `node` on the `PATH` the host gives the server.
+- Node `>=24.22.1`, as `node` on the `PATH` the host gives the server.
 - [Grok Build](https://docs.x.ai/build/overview), installed, authenticated
   and callable as `grok` on that `PATH`. Follow its native setup guide;
   grokpair does not install Grok or manage its login.
@@ -250,12 +250,13 @@ it has exited.
 
 ## Read further
 
-Source version **2.3.2** refines documentation, caller guidance and plugin
-presentation without changing runtime behavior from 2.3.1. The repository's
+Source version **2.3.3** updates the ACP SDK, Zod and pinned pnpm and requires
+the security-patched Node `>=24.22.1`. ACP remains on stable protocol v1;
+the public and persisted contracts are unchanged. The repository's
 [Git tags](https://github.com/Tiziano-AI/grokpair/tags) identify published
 source; the shared [catalog](https://github.com/Tiziano-AI/plugins) selects
 its offered revision. Installed and useful fresh-caller acceptance is
-recorded for **2.3.1** and is not inherited by 2.3.2.
+recorded for **2.3.1** and is not inherited by 2.3.3.
 
 Public schema **3**, runtime-v2, SQLite format 1 and `gp1.` cursors are
 unchanged. The store and cursor contracts are separate from the package
