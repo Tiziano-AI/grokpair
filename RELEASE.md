@@ -34,17 +34,33 @@ refresh.
 
 All 271 tests and the complete [source gates](AGENTS.md#build-test-and-inspect)
 passed against the rebuilt payload. The deterministic ACP peers cover the
-public MCP path and real detached worker; no live Grok inference ran. Strict
-Claude validation passed with one directory warning for an ignored,
+public MCP path and real detached worker; those gates used no live provider
+inference. Strict Claude validation passed with one directory warning for an ignored,
 untracked `plugin/.DS_Store`, which is not in the committed Git payload.
 The registry audit reported zero advisories across 158 dependencies;
 signature verification reported all 158 verified, with none invalid or
 missing. These are registry observations, not a guarantee of universal
 vulnerability or malware absence.
 
-Adversarial review through Grokpair remains outstanding. This is a source
-candidate, not a completed release: no 2.3.3 tag, public push, shared-catalog
-promotion, marketplace acquisition, intended-home installation or fresh-host
+Adversarial Grok review through Grokpair inspected candidate
+`b89e6f460da7ea9726192f4817cd1c2528623aa2`, its parent, the installed SDK and
+generated bundle, and found no supported blocker. Its synthetic in-memory
+peer confirmed that required standard payloads retain their original extra
+fields and custom methods preserve their full objects outside the stable
+session router. That router drops five unstable update discriminants the
+parent accepted: `plan_update`, `plan_removed`, `subagent_update`,
+`session_message` and `session_message_chunk`. The worker does not consume
+them, and their literals were absent from the inspected Grok 1.0.67 binary;
+the latter observation is not a live trace of every possible provider update.
+The review accepted the exact release-age exception and confirmed that
+esbuild accepts `node24.22.1`. That build target is not a runtime guard:
+`engines.node` declares the patched requirement, and no `process.version`
+refusal was added. The review did not rerun the source gates or qualify useful
+fresh-host consumer behavior.
+
+This is a reviewed source candidate, not a completed release: no 2.3.3 tag,
+public push, shared-catalog promotion, marketplace acquisition,
+intended-home installation or fresh-host
 acceptance has been performed. The installed and consumer observations for
 2.3.1 below are not inherited by this candidate.
 
