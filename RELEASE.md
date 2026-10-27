@@ -13,6 +13,48 @@ for published source identities and the
 offered by the shared marketplace. Neither selector alone establishes an
 installed consumer's version.
 
+## Source 2.3.4
+
+This source candidate updates only the transitive dependency graph and
+generated distribution: body-parser 2.3.0 → 2.4.0, fast-uri 3.1.8 → 3.1.9
+and qs 6.16.0 → 6.16.1. All resolve within existing upstream ranges; no
+override or direct dependency update is required.
+
+The 27 October 2026 registry audit of the preceding lockfile reported six
+advisories: one high-severity body-parser advisory, four fast-uri advisories
+(two moderate and two low), and one moderate qs advisory. Patched-version
+authority is the upstream
+[body-parser advisory](https://github.com/expressjs/body-parser/security/advisories/GHSA-27r3-jxmh-p828),
+[fast-uri advisory](https://github.com/fastify/fast-uri/security/advisories/GHSA-w74x-v6f9-j3xg)
+and [qs advisory](https://github.com/ljharb/qs/security/advisories/GHSA-6pq8-jhm2-2vcw).
+The frozen, script-disabled install passes and the updated registry audit
+reports zero advisories across 158 dependencies. These are dependency-graph
+findings, not evidence of exploitation: grokpair exposes stdio, not the HTTP
+middleware implicated by body-parser. A clean registry audit is not a claim
+of universal vulnerability or malware absence.
+
+All 271 tests and the complete [source gates](AGENTS.md#build-test-and-inspect)
+passed against the rebuilt payload with Node 24.22.1 and pnpm 12.15.0.
+These gates use deterministic peers rather than live provider inference.
+Strict Claude validation passed with one directory warning for an ignored,
+untracked `plugin/.DS_Store`, absent from the committed Git payload.
+Signature verification reported all 158 dependencies verified, with none
+invalid or missing; that observation is not a malware certificate.
+
+Adversarial Grok review through Grokpair inspected the actual candidate
+against its preceding public source, the upstream advisory ranges, lockfile,
+generated payload and Ajv consumer path, and found no supported blocker.
+Only fast-uri contributes changed code to the distributed bundle, through
+Ajv's schema-ID and reference resolution for elicitation forms. Body-parser
+and qs remain outside that stdio payload. The review identified stale
+current-version labels in README and the capabilities document; those labels
+now describe 2.3.4. It did not repeat the gate chain, audit or signature
+verification, and it does not qualify installed consumers.
+
+This is a reviewed source candidate, not a completed release: no public
+push, tag, catalog promotion, installation or consumer cutover is included
+in this preparation.
+
 ## Source 2.3.3
 
 Version 2.3.3 updates ACP SDK 1.8.0 to 2.0.1, Zod 4.6.6 to 4.6.7 and

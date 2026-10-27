@@ -250,13 +250,14 @@ it has exited.
 
 ## Read further
 
-Source version **2.3.3** updates the ACP SDK, Zod and pinned pnpm and requires
-the security-patched Node `>=24.22.1`. ACP remains on stable protocol v1;
+Source version **2.3.4** updates locked transitive dependencies to their
+patched releases and retains the security-patched Node `>=24.22.1` floor.
+ACP remains on stable protocol v1;
 the public and persisted contracts are unchanged. The repository's
 [Git tags](https://github.com/Tiziano-AI/grokpair/tags) identify published
 source; the shared [catalog](https://github.com/Tiziano-AI/plugins) selects
 its offered revision. Installed and useful fresh-caller acceptance is
-recorded for **2.3.1** and is not inherited by 2.3.3.
+recorded for **2.3.1** and is not inherited by 2.3.4.
 
 Public schema **3**, runtime-v2, SQLite format 1 and `gp1.` cursors are
 unchanged. The store and cursor contracts are separate from the package

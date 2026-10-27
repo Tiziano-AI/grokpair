@@ -1,5 +1,18 @@
 # Changelog
 
+## 2.3.4 — Transitive security fixes
+
+- **Patched locked dependencies.** Update body-parser 2.3.0 to 2.4.0,
+  fast-uri 3.1.8 to 3.1.9 and qs 6.16.0 to 6.16.1 within their dependents'
+  existing version ranges. This removes six registry advisories without new
+  overrides, direct dependency changes or protocol migrations.
+- **Rebuilt distribution.** Regenerate the bundled code and host metadata so
+  the committed plugin selects the patched dependency graph. The stdio-only
+  public transport, eight tools and persisted contracts are unchanged.
+
+[RELEASE](RELEASE.md#source-234) records source qualification and the separate
+review, publication and installed-consumer boundaries.
+
 ## 2.3.3 — Stable dependency refresh
 
 - **Current upstream dependencies.** Update ACP SDK 1.8.0 to 2.0.1, Zod

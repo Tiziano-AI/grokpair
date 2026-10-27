@@ -22,7 +22,7 @@ public contract.
 
 | Contract | Current | Owner |
 | --- | --- | --- |
-| Product version | 2.3.3 | `package.json` |
+| Product version | 2.3.4 | `package.json` |
 | Public schema | `"3"` | `PUBLIC_SCHEMA_VERSION` in `src/core.ts` |
 | Runtime contract | 2, directory `runtime-v2` | `RUNTIME_CONTRACT` in `src/agent-store.ts` |
 | SQLite format | 1 | `src/agent-store.ts` |
@@ -33,9 +33,10 @@ These are separate contracts that change independently. A runtime-contract
 change starts a new store directory; there is no migration, compatible reader
 or old-runtime lookup.
 
-Version 2.3.3 updates the ACP SDK, Zod and pinned pnpm and raises the Node
-floor to the patched 24.22.1 release. The public protocol and persisted
-contracts remain unchanged. The
+Version 2.3.4 refreshes the locked body-parser, fast-uri and qs transitive
+dependencies to their patched releases and rebuilds the distributed payload.
+The direct dependencies, Node floor, public protocol and persisted contracts
+remain unchanged. The
 repository's [Git tags](https://github.com/Tiziano-AI/grokpair/tags) identify
 published source; the shared [catalog](https://github.com/Tiziano-AI/plugins)
 selects its offered revision. [RELEASE](RELEASE.md) records source qualification

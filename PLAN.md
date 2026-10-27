@@ -2,12 +2,13 @@
 
 ## Where it stands
 
-The current source is **2.3.3**, with public schema 3, runtime-v2, SQLite
+The current source is **2.3.4**, with public schema 3, runtime-v2, SQLite
 format 1 and `gp1.` cursors. It retains one execution core
-and the same eight MCP/CLI tools. This version updates ACP SDK to 2.0.1,
-Zod to 4.6.7 and pinned pnpm to 12.15.0 and raises the Node floor to
-`>=24.22.1`. ACP remains on stable protocol v1; no MCP-v2 work is resumed
-and no public or persisted contract changes.
+and the same eight MCP/CLI tools. This version locks patched body-parser
+2.4.0, fast-uri 3.1.9 and qs 6.16.1 and rebuilds the distributed payload.
+Direct dependencies and the `>=24.22.1` Node floor are unchanged. ACP remains
+on stable protocol v1; no MCP-v2 work is resumed and no public or persisted
+contract changes.
 
 The repository's [Git tags](https://github.com/Tiziano-AI/grokpair/tags)
 identify published source revisions; the shared
