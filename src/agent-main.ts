@@ -2,7 +2,8 @@ import { readFileSync } from "node:fs";
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { ToolSchema, type CallToolResult, type Tool } from "@modelcontextprotocol/sdk/types.js";
-import { AgentError, COLLABORATOR_MARKER, PRODUCT, PRODUCT_VERSION, PUBLIC_SCHEMA_VERSION, failure } from "./core.js";
+import { AgentError, COLLABORATOR_MARKER, NODE_ENGINE, PRODUCT, PRODUCT_VERSION, PUBLIC_SCHEMA_VERSION, failure } from "./core.js";
+import { supportsNodeVersion } from "./node-runtime.js";
 import { AgentIdSchema, toolDefinitions, publicInputSchema, type ToolName } from "./agent-schema.js";
 import { AgentService } from "./agent-service.js";
 import { runWorker } from "./worker.js";
@@ -56,6 +57,11 @@ async function callTool(name: ToolName, args: string[]): Promise<void> {
 }
 const print = (value: unknown) => process.stdout.write(`${JSON.stringify(value, null, 2)}\n`);
 async function main(): Promise<void> {
+  if (!supportsNodeVersion(process.versions.node, NODE_ENGINE)) {
+    throw new AgentError("unsupported_node", `This package requires Node ${NODE_ENGINE}; this process runs ${process.versions.node}.`,
+      `Make supported Node ${NODE_ENGINE} available as node on the host's PATH, then start a new session. No command was dispatched.`,
+      { node_version: process.versions.node, node_engine: NODE_ENGINE });
+  }
   const [command, ...rest] = process.argv.slice(2);
   if (command === undefined || command === "help" || command === "--help" || command === "-h") { process.stdout.write(`${USAGE}\n`); return; }
   if (command === "mcp" && !rest.length) return serveMcp();

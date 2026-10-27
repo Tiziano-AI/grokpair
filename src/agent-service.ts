@@ -1,9 +1,10 @@
-import { spawn } from "node:child_process";
+import { spawn, spawnSync } from "node:child_process";
 import { accessSync, constants, statSync } from "node:fs";
 import { delimiter, isAbsolute, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { isDeepStrictEqual } from "node:util";
-import { AgentError, failure, id, now, PUBLIC_SCHEMA_VERSION } from "./core.js";
+import { AgentError, failure, id, NODE_ENGINE, now, PUBLIC_SCHEMA_VERSION } from "./core.js";
+import { supportsNodeVersion } from "./node-runtime.js";
 import { normalizedSpawnRequest, parseToolInput, type ToolName, type SpawnInput, type SendInput, type ReadInput, type ListInput, type WaitInput } from "./agent-schema.js";
 import { AgentStore, KeyRegistry, listAgentIds, promptActivity, removedFromQueue, type AgentMeta, type JsonRecord, type StoredRecord } from "./agent-store.js";
 import { summarizeAgent, type AgentSummary } from "./agent-state.js";
@@ -287,8 +288,15 @@ function workerCommand(environment: NodeJS.ProcessEnv): { node: string; entrypoi
     : (environment.PATH ?? "").split(delimiter).filter(isAbsolute).map(directory => join(directory, "node")).find(isExecutable);
   if (node === undefined) {
     throw new AgentError("worker_unavailable", `The Node executable this grokpair server started from is gone (${process.execPath}), typically removed by an upgrade while this server kept running, and no node is on its PATH to start a worker with.`,
-      "Make Node >=24.22.1 available as node on the PATH this host gives grokpair, then start a new session. Existing collaborators stay readable and closable; nothing was admitted.",
+      `Make supported Node ${NODE_ENGINE} available as node on the PATH this host gives grokpair, then start a new session. Existing collaborators stay readable and closable; nothing was admitted.`,
       { server_executable: process.execPath });
+  }
+  const observed = spawnSync(node, ["--version"], { encoding: "utf8", timeout: 5_000, maxBuffer: 1_024 });
+  const version = observed.status === 0 && observed.stdout.startsWith("v") ? observed.stdout.trim().slice(1) : "";
+  if (!supportsNodeVersion(version, NODE_ENGINE)) {
+    throw new AgentError("worker_unavailable", `The selected worker executable does not report a supported Node ${NODE_ENGINE} version.`,
+      `Make supported Node ${NODE_ENGINE} available as node on the host's PATH, then start a new session. Existing collaborators stay readable and closable; nothing was admitted.`,
+      { node, node_version: version || null, node_engine: NODE_ENGINE });
   }
   return { node, entrypoint };
 }

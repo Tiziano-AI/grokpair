@@ -9,7 +9,9 @@ decides what to use.
 
 ## Before first use
 
-- Node.js `>=24.22.1`, available as `node` on the host's `PATH`.
+- Stable Node.js 24, version 24.22.1 or later within 24.x (`^24.22.1`),
+  available as `node` on the host's `PATH`. Other majors are not supported
+  and are rejected before command dispatch.
 - Grok Build installed, authenticated and available as `grok` on that `PATH`.
 - Git and a source repository only when requesting a native worktree.
 

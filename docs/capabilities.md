@@ -3,8 +3,9 @@
 grokpair **2.3.4** · public schema **3** · runtime-v2 ·
 SQLite format 1 · cursors `gp1.`
 
-Version 2.3.4 refreshes the locked transitive security dependencies, retains
-the Node `>=24.22.1` floor and changes no public or persisted contract.
+Version 2.3.4 refreshes the locked transitive security dependencies and
+enforces Node `^24.22.1` (stable Node 24 only) before command dispatch.
+Other Node majors are not supported. No public or persisted contract changes.
 ACP remains on stable protocol v1.
 [RELEASE](../RELEASE.md) separates source qualification from installed and
 useful fresh-caller acceptance; those installed observations are specific

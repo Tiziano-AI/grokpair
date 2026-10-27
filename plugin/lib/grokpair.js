@@ -36707,7 +36707,7 @@ var package_default = {
     "native:check": "node scripts/check-no-native.mjs"
   },
   engines: {
-    node: ">=24.22.1"
+    node: "^24.22.1"
   },
   dependencies: {
     "@agentclientprotocol/sdk": "2.0.1",
@@ -36726,6 +36726,7 @@ var package_default = {
 // src/core.ts
 var PRODUCT = "grokpair";
 var PRODUCT_VERSION = package_default.version;
+var NODE_ENGINE = package_default.engines.node;
 var PUBLIC_SCHEMA_VERSION = "3";
 var COLLABORATOR_MARKER = "GROKPAIR_COLLABORATOR";
 function now() {
@@ -36822,6 +36823,23 @@ function failure2(error62, fallback = "agent_failed") {
       ...diagnostics.references.length ? { diagnostic_references: diagnostics.references } : {}
     }
   };
+}
+
+// src/node-runtime.ts
+var stableVersion = /^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)$/u;
+function nodeEngineFloor(engine) {
+  const floor = typeof engine === "string" && engine.startsWith("^") ? engine.slice(1) : "";
+  if (!stableVersion.test(floor) || floor.startsWith("0.")) {
+    throw new Error(`Node support must be a single ^major.minor.patch range, found ${String(engine)}`);
+  }
+  return floor;
+}
+function supportsNodeVersion(version2, engine) {
+  const floor = nodeEngineFloor(engine);
+  if (!stableVersion.test(version2)) return false;
+  const [major, minor, patch] = version2.split(".").map(Number);
+  const [floorMajor, floorMinor, floorPatch] = floor.split(".").map(Number);
+  return major === floorMajor && (minor > floorMinor || minor === floorMinor && patch >= floorPatch);
 }
 
 // src/agent-schema.ts
@@ -37036,7 +37054,7 @@ function publicInputSchema(name) {
 }
 
 // src/agent-service.ts
-import { spawn as spawn2 } from "node:child_process";
+import { spawn as spawn2, spawnSync as spawnSync3 } from "node:child_process";
 import { accessSync, constants as constants3, statSync } from "node:fs";
 import { delimiter, isAbsolute as isAbsolute4, join as join3 } from "node:path";
 import { fileURLToPath as fileURLToPath2 } from "node:url";
@@ -39100,8 +39118,18 @@ function workerCommand(environment) {
     throw new AgentError(
       "worker_unavailable",
       `The Node executable this grokpair server started from is gone (${process.execPath}), typically removed by an upgrade while this server kept running, and no node is on its PATH to start a worker with.`,
-      "Make Node >=24.22.1 available as node on the PATH this host gives grokpair, then start a new session. Existing collaborators stay readable and closable; nothing was admitted.",
+      `Make supported Node ${NODE_ENGINE} available as node on the PATH this host gives grokpair, then start a new session. Existing collaborators stay readable and closable; nothing was admitted.`,
       { server_executable: process.execPath }
+    );
+  }
+  const observed = spawnSync3(node2, ["--version"], { encoding: "utf8", timeout: 5e3, maxBuffer: 1024 });
+  const version2 = observed.status === 0 && observed.stdout.startsWith("v") ? observed.stdout.trim().slice(1) : "";
+  if (!supportsNodeVersion(version2, NODE_ENGINE)) {
+    throw new AgentError(
+      "worker_unavailable",
+      `The selected worker executable does not report a supported Node ${NODE_ENGINE} version.`,
+      `Make supported Node ${NODE_ENGINE} available as node on the host's PATH, then start a new session. Existing collaborators stay readable and closable; nothing was admitted.`,
+      { node: node2, node_version: version2 || null, node_engine: NODE_ENGINE }
     );
   }
   return { node: node2, entrypoint };
@@ -43823,6 +43851,14 @@ async function callTool(name, args) {
 var print = (value) => process.stdout.write(`${JSON.stringify(value, null, 2)}
 `);
 async function main() {
+  if (!supportsNodeVersion(process.versions.node, NODE_ENGINE)) {
+    throw new AgentError(
+      "unsupported_node",
+      `This package requires Node ${NODE_ENGINE}; this process runs ${process.versions.node}.`,
+      `Make supported Node ${NODE_ENGINE} available as node on the host's PATH, then start a new session. No command was dispatched.`,
+      { node_version: process.versions.node, node_engine: NODE_ENGINE }
+    );
+  }
   const [command, ...rest] = process.argv.slice(2);
   if (command === void 0 || command === "help" || command === "--help" || command === "-h") {
     process.stdout.write(`${USAGE}

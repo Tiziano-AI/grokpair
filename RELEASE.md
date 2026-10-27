@@ -15,10 +15,22 @@ installed consumer's version.
 
 ## Source 2.3.4
 
-This source candidate updates only the transitive dependency graph and
-generated distribution: body-parser 2.3.0 → 2.4.0, fast-uri 3.1.8 → 3.1.9
-and qs 6.16.0 → 6.16.1. All resolve within existing upstream ranges; no
+This source candidate patches the transitive dependency graph and enforces
+the supported Node major. Locked updates are body-parser 2.3.0 → 2.4.0,
+fast-uri 3.1.8 → 3.1.9 and qs 6.16.0 → 6.16.1. All resolve within existing
+upstream ranges; no
 override or direct dependency update is required.
+
+Node support is `^24.22.1`, restricted to stable Node 24. The earlier
+unbounded `>=24.22.1` declaration also admitted unpatched releases from
+later majors. The official [October Node security release](https://nodejs.org/en/blog/vulnerability/october-2026-security-releases)
+has separate patch floors for Node 24 and 26; qualifying 24 does not qualify
+26. This candidate rejects other majors and older Node 24 patches before
+dispatching any CLI, MCP or worker command. Spawn and resume also verify the
+selected worker executable's reported version before admission and again at
+launch. The same narrow range interpretation retains the exact esbuild
+target `node24.22.1`; no general semver parser or Node 26 qualification is
+introduced.
 
 The 27 October 2026 registry audit of the preceding lockfile reported six
 advisories: one high-severity body-parser advisory, four fast-uri advisories
@@ -33,9 +45,13 @@ findings, not evidence of exploitation: grokpair exposes stdio, not the HTTP
 middleware implicated by body-parser. A clean registry audit is not a claim
 of universal vulnerability or malware absence.
 
-All 271 tests and the complete [source gates](AGENTS.md#build-test-and-inspect)
+All 274 tests and the complete [source gates](AGENTS.md#build-test-and-inspect)
 passed against the rebuilt payload with Node 24.22.1 and pnpm 12.15.0.
 These gates use deterministic peers rather than live provider inference.
+The packaged entrypoint checks use synthetic version observations under
+Node 24, not execution or qualification of Node 26. MCP integration tests
+reject unsupported replacement executables before spawn or resume admission
+while keeping prior results readable.
 Strict Claude validation passed with one directory warning for an ignored,
 untracked `plugin/.DS_Store`, absent from the committed Git payload.
 Signature verification reported all 158 dependencies verified, with none
@@ -44,12 +60,22 @@ invalid or missing; that observation is not a malware certificate.
 Adversarial Grok review through Grokpair inspected the actual candidate
 against its preceding public source, the upstream advisory ranges, lockfile,
 generated payload and Ajv consumer path, and found no supported blocker.
-Only fast-uri contributes changed code to the distributed bundle, through
-Ajv's schema-ID and reference resolution for elicitation forms. Body-parser
+Within the dependency updates, only fast-uri contributes changed code to the
+distributed bundle, through Ajv's schema-ID and reference resolution for
+elicitation forms. Body-parser
 and qs remain outside that stdio payload. The review identified stale
 current-version labels in README and the capabilities document; those labels
 now describe 2.3.4. It did not repeat the gate chain, audit or signature
 verification, and it does not qualify installed consumers.
+
+A separate adversarial Grok review inspected the Node-support correction,
+evaluated the same-major predicate directly, and found no supported
+correctness, security or payload-fidelity blocker. It checked the selected
+executable's version preflight, admission order, generated guards and exact
+build target. The complete source gates above cover this final runtime
+correction; the audit and signature observations cover its unchanged
+dependency graph and were not repeated for that correction. Neither the
+review nor the synthetic version tests qualify another Node major.
 
 This is a reviewed source candidate, not a completed release: no public
 push, tag, catalog promotion, installation or consumer cutover is included

@@ -250,7 +250,7 @@ const modules = (await readdir(sourceRoot, { withFileTypes: true }))
 // complete. A module may be added, removed, or moved only by updating the
 // owner map as part of the same architectural review.
 const productionOwners = Object.freeze({
-  public_protocol: ["core.ts", "agent-schema.ts", "agent-main.ts", "agent-service.ts"],
+  public_protocol: ["core.ts", "node-runtime.ts", "agent-schema.ts", "agent-main.ts", "agent-service.ts"],
   durable_bridge: ["agent-store.ts", "agent-state.ts", "process.ts", "worker.ts"],
   native_adapter: ["native.ts", "attention.ts"],
   workspace_and_inputs: ["filesystem.ts", "workspace.ts"],

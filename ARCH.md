@@ -27,7 +27,7 @@ public contract.
 | Runtime contract | 2, directory `runtime-v2` | `RUNTIME_CONTRACT` in `src/agent-store.ts` |
 | SQLite format | 1 | `src/agent-store.ts` |
 | Cursors | `gp1.` for read and wait, `gp1.list.` for list | `src/agent-service.ts` |
-| Node floor | `>=24.22.1` | `package.json` engines |
+| Node support | `^24.22.1` (stable Node 24 only) | `package.json` engines |
 
 These are separate contracts that change independently. A runtime-contract
 change starts a new store directory; there is no migration, compatible reader
@@ -35,8 +35,10 @@ or old-runtime lookup.
 
 Version 2.3.4 refreshes the locked body-parser, fast-uri and qs transitive
 dependencies to their patched releases and rebuilds the distributed payload.
-The direct dependencies, Node floor, public protocol and persisted contracts
-remain unchanged. The
+The direct dependencies, public protocol and persisted contracts remain
+unchanged. Runtime support is restricted to patched stable Node 24; the
+entrypoint refuses other majors and older patches before command dispatch.
+The
 repository's [Git tags](https://github.com/Tiziano-AI/grokpair/tags) identify
 published source; the shared [catalog](https://github.com/Tiziano-AI/plugins)
 selects its offered revision. [RELEASE](RELEASE.md) records source qualification
@@ -208,6 +210,15 @@ instructions: hosts can repeat those before every tool, so each description
 carries its own use and recovery, and the collaboration cycle lives in the
 skill. Claude Code cuts tool descriptions at 2,048 characters, so each stays
 below that.
+
+`package.json` declares Node `^24.22.1`: stable Node 24 at or above that
+patch floor, not every later major. `src/node-runtime.ts` owns this narrow
+same-major range interpretation for both runtime admission and esbuild's
+exact floor target. The entrypoint rejects unsupported versions before
+dispatching CLI, MCP or worker commands. If an update removes the server's
+Node executable, worker preflight checks the replacement's reported version
+before admitting spawn or resume and checks it again at launch. Node 26 is
+neither supported nor qualified by this source.
 
 Grok Build loads the plugins installed for Claude Code, so a Claude install of
 grokpair would reach every Grok session on the machine, collaborators included.
@@ -473,7 +484,7 @@ or parsing prose.
 
 | Boundary | Modules under src/ |
 | --- | --- |
-| Public protocol | core.ts, agent-schema.ts, agent-main.ts, agent-service.ts |
+| Public protocol | core.ts, node-runtime.ts, agent-schema.ts, agent-main.ts, agent-service.ts |
 | Durable state and lifecycle | agent-store.ts, agent-state.ts, process.ts, worker.ts |
 | Native adapter and decisions | native.ts, attention.ts |
 | Workspace and inputs | filesystem.ts, workspace.ts |
@@ -485,7 +496,7 @@ protected homes, `src/agent-store.ts` the runtime coordinates, contract
 constant and key registry, `src/agent-state.ts` the derived status, and
 `src/agent-service.ts` views, cursors, wait and list. Outside `src/`,
 `scripts/manifests.mjs` owns host packaging and `package.json` the product
-version, Node floor, pinned pnpm and exact dependency pins. The build owns
+version, Node support range, pinned pnpm and exact dependency pins. The build owns
 `plugin/lib`, the generated schema and every generated manifest; they are
 committed because both marketplaces install the committed `plugin/` tree. The
 whole skill package is a primary product surface; its validator checks

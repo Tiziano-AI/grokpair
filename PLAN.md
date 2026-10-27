@@ -6,9 +6,11 @@ The current source is **2.3.4**, with public schema 3, runtime-v2, SQLite
 format 1 and `gp1.` cursors. It retains one execution core
 and the same eight MCP/CLI tools. This version locks patched body-parser
 2.4.0, fast-uri 3.1.9 and qs 6.16.1 and rebuilds the distributed payload.
-Direct dependencies and the `>=24.22.1` Node floor are unchanged. ACP remains
-on stable protocol v1; no MCP-v2 work is resumed and no public or persisted
-contract changes.
+Direct dependencies are unchanged. Node support is `^24.22.1`: stable Node
+24 only, enforced before CLI, MCP or worker command dispatch and before new
+worker admission. Other majors, including Node 26, are not qualified or
+accepted. ACP remains on stable protocol v1; no MCP-v2 work is resumed and no
+public or persisted contract changes.
 
 The repository's [Git tags](https://github.com/Tiziano-AI/grokpair/tags)
 identify published source revisions; the shared

@@ -6,6 +6,13 @@ permission does not authorize unrelated effects or information transfer.
 
 ## Native identity and execution
 
+The package supports stable Node 24 from 24.22.1 (`^24.22.1`), not an
+unbounded minimum across later majors. Its entrypoint refuses unsupported
+versions before command dispatch, and worker admission verifies the selected
+executable's reported version before spawn or resume. Node 26 is not
+supported or qualified by this package. A supported version range does not
+replace keeping that Node line current with its security updates.
+
 Conversation runs through `grok agent stdio` and the official ACP SDK;
 optional isolation first uses native `grok worktree create`. Grok keeps its
 identity, home, configuration and approval policy. grokpair supplies no copied

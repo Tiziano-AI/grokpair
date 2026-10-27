@@ -924,6 +924,36 @@ test("a server with neither its Node executable nor node on its PATH refuses spa
   } finally { await stale?.close(); await clean(current, mcp); }
 });
 
+test("an unsupported replacement Node refuses spawn and resume before admission without blocking retained reads", { timeout: 30_000 }, async () => {
+  const current = fixture(), mcp = await connect(current); let stale;
+  const replacement = join(current.root, "replacement"); mkdirSync(replacement);
+  const node = join(replacement, "node"), launches = join(current.root, "unexpected-node-launch");
+  try {
+    const crashed = (await mcp.call("grok_spawn", { task: "THIN:crash-after", cwd: current.cwd })).agent_id;
+    await until(() => read(mcp, crashed), value => value.status === "disconnected", "crashed before replacement checks");
+    await until(async () => workerClaim(current, crashed), value => value === null, "prior resident released");
+    stale = await connect({ ...current, env: { ...current.env, PATH: replacement } }, { removedNode: join(current.root, "removed-node") });
+    const agents = join(current.root, "runtime", "runtime-v2", "agents"), before = readdirSync(agents);
+    for (const version of ["v24.22.0", "v26.0.0", "v26.12.0", "v26.12.1", "not-node"]) {
+      writeFileSync(node, `#!/bin/sh\nif [ "$1" = "--version" ]; then printf '%s\\n' ${quote(version)}; exit 0; fi\nprintf 'unexpected launch\\n' >> ${quote(launches)}\nexit 42\n`);
+      chmodSync(node, 0o755);
+      const key = `unsupported-${version}`;
+      const refused = await stale.call("grok_spawn", { task: "Never admitted.", cwd: current.cwd, key }, true);
+      assert.equal(refused.error.code, "worker_unavailable"); assert.equal(refused.error.admission, "none");
+      assert.equal(Object.hasOwn(refused.error, "agent_id"), false); assert.equal(Object.hasOwn(refused.error, "operation_id"), false);
+      assert.deepEqual(readdirSync(agents), before);
+      assert.deepEqual((await stale.call("grok_list", { key, include_closed: true })).agents, []);
+      const resume = await stale.call("grok_send", { agent_id: crashed, resume: true, task: "Never resumed." }, true);
+      assert.equal(resume.error.code, "worker_unavailable"); assert.equal(resume.error.admission, "none");
+      assert.equal(Object.hasOwn(resume.error, "operation_id"), false);
+      const retained = await read(stale, crashed);
+      assert.equal(retained.operations.filter(operation => operation.kind === "follow_up").length, 1);
+    }
+    assert.equal(existsSync(launches), false);
+    assert.equal(current.traces().filter(item => item.kind === "launch").length, 1);
+  } finally { await stale?.close(); await clean(current, mcp); }
+});
+
 test("a server whose own package an update removed refuses spawn before admission", { timeout: 30_000 }, async () => {
   const current = fixture(), copy = join(current.root, "plugin", "2.0.0", "lib", "grokpair.js");
   mkdirSync(dirname(copy), { recursive: true }); copyFileSync(entrypoint, copy);

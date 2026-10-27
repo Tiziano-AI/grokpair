@@ -4,6 +4,7 @@ import manifest from "../package.json" with { type: "json" };
 /** Product data primitives; no runtime, provider or public-contract dependency. */
 export const PRODUCT = "grokpair" as const;
 export const PRODUCT_VERSION = manifest.version;
+export const NODE_ENGINE = manifest.engines.node;
 export const PUBLIC_SCHEMA_VERSION = "3" as const;
 /** Set in a collaborator's provider environment; a grokpair started beneath it serves no tools. */
 export const COLLABORATOR_MARKER = "GROKPAIR_COLLABORATOR" as const;

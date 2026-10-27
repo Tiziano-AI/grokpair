@@ -9,6 +9,12 @@
 - **Rebuilt distribution.** Regenerate the bundled code and host metadata so
   the committed plugin selects the patched dependency graph. The stdio-only
   public transport, eight tools and persisted contracts are unchanged.
+- **Per-major Node support.** Replace the unbounded `>=24.22.1` declaration
+  with `^24.22.1` and reject unsupported Node versions before CLI, MCP or
+  worker dispatch. New worker admission verifies the selected executable's
+  reported version. Node 26 has a separate security patch floor and is not
+  supported or qualified here. The build retains the exact `node24.22.1`
+  target using the same narrow range interpretation as runtime admission.
 
 [RELEASE](RELEASE.md#source-234) records source qualification and the separate
 review, publication and installed-consumer boundaries.

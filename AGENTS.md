@@ -50,9 +50,13 @@ the owner rather than restating it somewhere else.
 In the code:
 
 - `package.json` owns the product name, version, description, keywords, the
-  Node floor (`>=24.22.1`) and the pinned pnpm. Public schema, runtime directory,
+  Node support (`^24.22.1`, stable Node 24 only) and the pinned pnpm. Public schema, runtime directory,
   SQLite format and cursor versions are separate contracts; ARCH states the
   current ones.
+- `src/node-runtime.ts` interprets the single same-major Node support range
+  for runtime admission and the build target. `scripts/node-target.mjs`
+  derives esbuild's exact floor from it; do not replace this with an unbounded
+  minimum or imply qualification of another Node major.
 - `scripts/manifests.mjs` owns host packaging. `pnpm build` typechecks,
   bundles `src/` into `plugin/lib/grokpair.js`, writes
   `plugin/schemas/grokpair-tools.schema.json`, and generates from
@@ -111,9 +115,11 @@ git diff --check
 - `tests/thin-integration.test.mjs` drives the built entrypoint through public
   MCP, the real detached worker and the official ACP SDK against
   `tests/fixtures/thin-native.mjs`, a deterministic ACP peer placed on a
-  test-local PATH as `grok`. Setting `GROKPAIR_TEST_ENTRYPOINT` points that
-  file at another bundle, such as an installed plugin's `lib/grokpair.js`; the
-  other test files import `src/` directly.
+  test-local PATH as `grok`. `tests/thin-node-runtime.test.mjs` checks the
+  packaged entrypoint's version refusal with synthetic observations. Setting
+  `GROKPAIR_TEST_ENTRYPOINT` points both files at another bundle, such as an
+  installed plugin's `lib/grokpair.js`; the other test files import `src/`
+  directly.
 - Tests and checks use isolated state under `/private/tmp`, outside the
   package, and never private native configuration such as `~/.grok`, the real
   `CODEX_HOME`, `~/.claude` or `~/.local/state/grokpair`. Keep new harness

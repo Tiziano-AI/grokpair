@@ -50,7 +50,7 @@
     "native:check": "node scripts/check-no-native.mjs"
   },
   "engines": {
-    "node": ">=24.22.1"
+    "node": "^24.22.1"
   },
   "dependencies": {
     "@agentclientprotocol/sdk": "2.0.1",

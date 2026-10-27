@@ -19,7 +19,9 @@ can use the same eight tools through MCP or the command line.
 
 ## Requirements
 
-- Node `>=24.22.1`, as `node` on the `PATH` the host gives the server.
+- Stable Node **24**, version **24.22.1 or later within 24.x** (`^24.22.1`),
+  as `node` on the `PATH` the host gives the server. Other majors, including
+  Node 26, are not supported; the entrypoint rejects them before dispatch.
 - [Grok Build](https://docs.x.ai/build/overview), installed, authenticated
   and callable as `grok` on that `PATH`. Follow its native setup guide;
   grokpair does not install Grok or manage its login.
@@ -251,7 +253,7 @@ it has exited.
 ## Read further
 
 Source version **2.3.4** updates locked transitive dependencies to their
-patched releases and retains the security-patched Node `>=24.22.1` floor.
+patched releases and enforces Node `^24.22.1`, restricted to stable Node 24.
 ACP remains on stable protocol v1;
 the public and persisted contracts are unchanged. The repository's
 [Git tags](https://github.com/Tiziano-AI/grokpair/tags) identify published

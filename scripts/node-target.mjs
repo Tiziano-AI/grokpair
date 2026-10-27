@@ -1,13 +1,8 @@
 import { build } from "esbuild";
+import { nodeEngineFloor } from "../src/node-runtime.ts";
 
 export function nodeTargetFromEngineFloor(engineFloor) {
-  const match = typeof engineFloor === "string"
-    ? /^>=(?<version>\d+\.\d+(?:\.\d+)?)$/u.exec(engineFloor)
-    : null;
-  if (!match?.groups?.version) {
-    throw new Error(`Node engine floor must be an exact >=major.minor or >=major.minor.patch value, found ${String(engineFloor)}`);
-  }
-  return `node${match.groups.version}`;
+  return `node${nodeEngineFloor(engineFloor)}`;
 }
 
 export function nodeBuildOptionsFromEngineFloor(engineFloor, options) {
